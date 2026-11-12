@@ -1,0 +1,357 @@
+---
+import Base from '../layouts/Base.astro';
+import Shot from '../components/Shot.astro';
+import site from '../../site.config.json';
+import type { ImageMetadata } from 'astro';
+
+// Real screenshots of the demo school (fake data), raw PNGs kept in the app repo's docs/marketing/screenshots.
+const web = import.meta.glob<{ default: ImageMetadata }>('../assets/shots/web/*.png', { eager: true });
+const app = import.meta.glob<{ default: ImageMetadata }>('../assets/shots/app/*.png', { eager: true });
+const W = (n: string) => web[`../assets/shots/web/${n}.png`].default;
+const A = (n: string) => app[`../assets/shots/app/${n}.png`]?.default ?? W('parent-portal-phone');
+
+const digits = site.contact.whatsappNumber.replace(/\D/g, '');
+const waText = encodeURIComponent("Assalam o alaikum, I'd like a demo of Ilm Vanta for my school.");
+const waLink = `https://wa.me/${digits}?text=${waText}`;
+const formReady = !!site.form.web3formsAccessKey && site.form.web3formsAccessKey !== 'WEB3FORMS_ACCESS_KEY';
+
+const tour = [
+  { id: 'fee', tab: 'Fee', title: 'Challans, discounts and payments', text: 'Generate a month of challans for the whole school in one go. Sibling and other discounts are applied, part payments are recorded, and the overdue list stays accurate.', points: ['Monthly and one-time charges', 'Cash, bank transfer and cheque receipts', 'Paid, part paid and overdue at a glance'], img: W('fee-challans'), alt: 'Fee challans list showing November 2026 challans with paid and overdue status', url: 'app.ilmvanta.com/app/fee/challans', side: { img: W('fee-challan-detail'), alt: 'Challan CHN-2026-000160 for Hamza Raza: tuition Rs 3,500, sibling discount Rs 350, paid Rs 3,150' } },
+  { id: 'attendance', tab: 'Attendance', title: 'The daily register in a minute', text: 'Pick a section and mark the day. Weekends and holidays such as Iqbal Day are closed automatically, so nobody marks a day the school was shut.', points: ['Present, absent, late, half day, excused', 'Teachers can mark from the phone, even offline', 'Monthly history per section and per student'], img: W('attendance-sheet'), alt: 'Attendance sheet for Grade 5-A with each student marked present', url: 'app.ilmvanta.com/app/academics/attendance' },
+  { id: 'exams', tab: 'Exams', title: 'Marks to report cards', text: 'Enter marks per subject, and report cards are worked out with totals, grades and the position in the section, ready to print or share.', points: ['Your own grade scale', 'Rank in section', 'Teacher remarks'], img: W('report-cards-list'), alt: 'Mid-term 2026 report cards for Grade 5-A ranked by percentage', url: 'app.ilmvanta.com/app/exams/report-cards', side: { img: W('report-card'), alt: 'Report card for Minahil Qureshi, Mid-term 2026: 639 of 700, grade A+, rank 1' } },
+  { id: 'timetable', tab: 'Timetable', title: 'Timetable and covers', text: 'Build the weekly timetable section by section. Clashes for teachers and rooms are refused, and when a teacher is on leave the periods that need cover are listed for you.', points: ['Bell schedules per campus', 'Teacher and room views', 'Covers from approved leave'], img: W('timetable'), alt: 'Weekly timetable grid for Grade 5-A with subjects, teachers and rooms', url: 'app.ilmvanta.com/app/academics/timetable' },
+  { id: 'payroll', tab: 'Payroll', title: 'Salaries and payslips', text: 'Allowances, provident fund, EOBI and tax come from each salary structure, and absences are deducted from staff attendance.', points: ['Payroll run per month', 'Payslips with net salary in words', 'Bank transfer list'], img: W('payroll-run'), alt: 'October 2026 payroll run for 10 employees, finalized and paid', url: 'app.ilmvanta.com/app/hr/payroll', side: { img: W('payslip'), alt: 'Payslip for Sana Malik, October 2026, net salary Rs 101,540' } },
+  { id: 'overview', tab: 'Dashboard', title: 'The whole school on one screen', text: 'Students, teachers present today, attendance, fee received this month and what is outstanding, for the principal and the owner.', points: ['Today\'s attendance', 'Fee received and outstanding', 'Pending admissions'], img: W('dashboard'), alt: 'School dashboard: 120 students, 91.7% attendance today, fee receipts this month', url: 'app.ilmvanta.com/app/home' },
+  { id: 'notices', tab: 'Notices', title: 'Announcements in English and Urdu', text: 'Write once in both languages and see exactly what parents will see on a locked phone and in their inbox before you send.', points: ['All parents, or chosen grades and sections', 'Staff notices', 'Emergency notices that skip quiet hours'], img: W('announcement-compose'), alt: 'New announcement form with English and Urdu text and a preview of the phone notification', url: 'app.ilmvanta.com/app/notifications/announcements/new' },
+];
+
+const phones = [
+  { id: 'parent', label: 'Parent', img: A('parent-home-en'), alt: 'Parent app home for Imran Raza: Ayesha present today, 90.3% attendance, no fee due' },
+  { id: 'urdu', label: 'اردو', ur: true, img: A('parent-home-ur'), alt: 'Parent home screen in Urdu for Hamza Raza' },
+  { id: 'fee', label: 'Fee', img: A('parent-fee'), alt: 'Fee screen for Hamza Raza: October overdue Rs 3,150, November paid' },
+  { id: 'inbox', label: 'Inbox', img: A('notifications'), alt: 'Notifications inbox with three school announcements' },
+  { id: 'teacher', label: 'Teacher', img: A('teacher-today'), alt: 'Teacher home for Sana Malik: five periods today, including a Mathematics cover for Usman Tariq' },
+  { id: 'register', label: 'Attendance', img: A('teacher-attendance'), alt: 'Taking attendance for Grade 5-A on the phone: 19 present, 2 absent, 1 late' },
+];
+---
+<Base
+  title="Ilm Vanta: school management software for Pakistan"
+  description="Admissions, attendance, fee challans, exams, timetables and payroll in one system, with an English and Urdu app for parents and teachers."
+  path="/"
+>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">School management for Pakistan</p>
+        <h1 id="hero-title">Admissions to fee challans, <em>one system</em> for your whole school.</h1>
+        <p class="lede">Ilm Vanta runs attendance, fees, exams, timetables and payroll, and keeps parents informed on their phones in English or Urdu.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#demo">Book a free demo</a>
+          <a class="btn btn-ghost" href="#contact-ways">Ask on WhatsApp</a>
+        </div>
+        <p class="small">Web for your office, an Android app for teachers and parents.</p>
+      </div>
+
+      <div class="desk" role="img" aria-label="Examples from a demo school: a paid fee challan, a week of attendance and a payment notification">
+        <div class="paper challan" aria-hidden="true">
+          <div class="top"><span class="school">Ilm Vanta Demo School</span><span class="mono">CHN-2026-000160</span></div>
+          <div class="row"><span>Student</span><span>Hamza Raza · IVD-1002</span></div>
+          <div class="row"><span>Class</span><span>Grade 2-A</span></div>
+          <div class="row"><span>Month</span><span>November 2026</span></div>
+          <div class="row"><span>Tuition fee</span><span>Rs 3,500</span></div>
+          <div class="row"><span>Sibling discount</span><span>− Rs 350</span></div>
+          <div class="row total"><span>Total</span><span>Rs 3,150</span></div>
+          <div class="row"><span>Due date</span><span>10 Nov 2026</span></div>
+          <span class="stamp">PAID</span>
+        </div>
+        <div class="paper register" aria-hidden="true">
+          <h2><span>Grade 5-A attendance</span><span class="mono">2–6 Nov</span></h2>
+          <div class="reg-row head"><span>Student</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></div>
+          <div class="reg-row"><span>Ayesha Raza</span><span class="chip">P</span><span class="chip">P</span><span class="chip">P</span><span class="chip">P</span><span class="chip">P</span></div>
+          <div class="reg-row"><span>Amna Ansari</span><span class="chip">P</span><span class="chip">P</span><span class="chip a">A</span><span class="chip">P</span><span class="chip">P</span></div>
+          <div class="reg-row"><span>Aleena Kazmi</span><span class="chip l">L</span><span class="chip">P</span><span class="chip">P</span><span class="chip">P</span><span class="chip">P</span></div>
+          <p class="reg-sum">Friday: 21 present · 1 absent</p>
+        </div>
+        <div class="paper alert" aria-hidden="true">
+          <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15z M10 20a2 2 0 0 0 4 0" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></span>
+          <div>
+            <b>Ilm Vanta Demo School <span class="mono">· now</span></b>
+            <p>Rs 3,150 received for Hamza's challan CHN-2026-000160.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <ul class="wrap" aria-label="Built for Pakistani schools">
+      <li>Guardians linked by CNIC</li>
+      <li>Sibling and other discounts</li>
+      <li>Fee challans in rupees</li>
+      <li>EOBI, PF and tax in payroll</li>
+      <li>Urdu parent and teacher app</li>
+      <li>Attendance works offline on the phone</li>
+    </ul>
+  </div>
+
+  <section id="features" aria-labelledby="features-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">What's inside</p>
+        <h2 id="features-title">Everything a school office does, in one place</h2>
+        <p class="lede">Each part works on its own and shares data with the rest, so a student entered once shows up in attendance, fees, exams and the parent app.</p>
+      </div>
+      <div class="modules">
+        <div class="mod"><span class="tag">Admissions</span><h3>Applications to enrolment</h3><p>Applications, entrance tests, approvals and bulk enrolment. Siblings share one guardian record.</p></div>
+        <div class="mod"><span class="tag">Attendance</span><h3>Daily register</h3><p>Mark a section in seconds. Holidays and weekly offs are skipped automatically.</p></div>
+        <div class="mod"><span class="tag">Fee</span><h3>Challans and receipts</h3><p>Monthly challans, discounts, part payments and an overdue list your accountant can trust.</p></div>
+        <div class="mod"><span class="tag">Exams</span><h3>Marks and report cards</h3><p>Grade scales, positions per section and printable report cards.</p></div>
+        <div class="mod"><span class="tag">Timetable</span><h3>Periods and covers</h3><p>Build the weekly timetable, catch teacher clashes, and assign a cover when a teacher is absent.</p></div>
+        <div class="mod"><span class="tag">Staff</span><h3>HR and leave</h3><p>Staff records, staff attendance and leave requests with approval.</p></div>
+        <div class="mod"><span class="tag">Payroll</span><h3>Salaries and payslips</h3><p>Allowances, PF, EOBI and tax, with deductions for absences calculated for you.</p></div>
+        <div class="mod"><span class="tag">Messages</span><h3>Parents stay informed</h3><p>Absence alerts, fee reminders and announcements by app, email or a WhatsApp button.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tour" id="tour" aria-labelledby="tour-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">See it</p>
+        <h2 id="tour-title">Real screens from a demo school</h2>
+        <p class="lede">These are screenshots of Ilm Vanta itself, taken from a demo school with made-up students and staff.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Screens">
+        {tour.map((t, i) => (
+          <button type="button" role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{t.tab}</button>
+        ))}
+      </div>
+      {tour.map((t, i) => (
+        <div class="panel" role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`} hidden={i !== 0}>
+          <Shot src={t.img} alt={t.alt} url={t.url} />
+          <div class="side">
+            <h3>{t.title}</h3>
+            <p>{t.text}</p>
+            <ul>{t.points.map((p) => <li>{p}</li>)}</ul>
+            {t.side && <div style="margin-top:22px"><Shot src={t.side.img} alt={t.side.alt} frame="doc" sizes="(max-width: 900px) 100vw, 300px" widths={[300, 600, 900]} /></div>}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section aria-labelledby="roles-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Who uses it</p>
+        <h2 id="roles-title">Each person sees only their own work</h2>
+      </div>
+      <div class="roles">
+        <div class="role"><h3>Owner and principal</h3><ul><li>Fee collected vs outstanding</li><li>Attendance across sections</li><li>Approve leave and admissions</li></ul></div>
+        <div class="role"><h3>Front desk and accountant</h3><ul><li>Enquiries and admissions</li><li>Generate and collect challans</li><li>Record payments and receipts</li></ul></div>
+        <div class="role"><h3>Teachers</h3><ul><li>Today's periods and covers</li><li>Attendance from the phone</li><li>Enter exam marks</li></ul></div>
+        <div class="role"><h3>Parents</h3><ul><li>Attendance and results</li><li>Fee due and paid</li><li>School announcements</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band app" id="app" aria-labelledby="app-title">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Mobile app</p>
+        <h2 id="app-title">Your school's name on every parent's phone</h2>
+        <p class="lede">Parents and teachers use one Android app. After sign-in it shows your school's name and logo, in English or Urdu.</p>
+        <ul class="points">
+          <li><span>Parents with two or more children switch between them in one tap.</span></li>
+          <li><span>Teachers see today's periods, including covers for absent colleagues.</span></li>
+          <li><span>Recent data stays readable without internet.</span></li>
+          <li><span>Parents without the app can use the web portal.</span></li>
+        </ul>
+      </div>
+      <div class="phone-wrap">
+        <div class="seg" role="group" aria-label="App screen">
+          {phones.map((p, i) => <button type="button" class={p.ur ? 'ur' : undefined} lang={p.ur ? 'ur' : undefined} data-phone={p.id} aria-pressed={i === 0 ? 'true' : 'false'}>{p.label}</button>)}
+        </div>
+        {phones.map((p, i) => (
+          <div data-phone-panel={p.id} hidden={i !== 0}>
+            <Shot src={p.img} alt={p.alt} frame="phone" />
+          </div>
+        ))}
+        <p class="caption">Screenshots from the Android app (demo school, made-up data).</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="start-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Getting started</p>
+        <h2 id="start-title">From first call to your first challan</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>See it with your data</h3><p>A short online demo using a school like yours: your classes, your fee structure.</p></div>
+        {site.faq.setupImportHelp
+          ? <div class="step"><h3>We set up your school</h3><p>Campuses, classes, sections, fee heads and staff accounts. Send your student list and we help bring it in.</p></div>
+          : <div class="step"><h3>Set up your school</h3><p>Campuses, classes, sections, fee heads and staff accounts, with a guide for each step.</p></div>}
+        <div class="step"><h3>Train and go live</h3><p>Your office staff and teachers get a walkthrough, and parents get an invite link to the app.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="plans-sec" id="plans" aria-labelledby="plans-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Plans</p>
+        <h2 id="plans-title">Pay for what your school uses</h2>
+        <p class="lede">Price depends on the number of students. Pay monthly, quarterly or yearly.</p>
+        <div class="cycles"><span>Monthly</span><span>Quarterly</span><span>Yearly</span></div>
+      </div>
+      <div class="plans">
+        {site.plans.map((p) => (
+          <div class={p.highlight ? 'plan pick' : 'plan'}>
+            {p.badge && <span class="badge">{p.badge}</span>}
+            <h3>{p.name}</h3>
+            <p class="for">{p.for}</p>
+            <div class="price">{site.pricing.showStartingPrice ? site.pricing.startingPriceText : 'Contact us for price'}<small>Based on student count</small></div>
+            <ul>{p.modules.map((m) => <li class={m.startsWith('+') ? 'plus' : undefined}>{m.replace(/^\+/, '')}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+      <div class="addon">
+        <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" style="flex:none;color:var(--primary)"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9z" fill="currentColor"/></svg>
+        <div><b>Optional add-on: {site.addOn.name}</b><p>{site.addOn.text}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="trust-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Your data</p>
+        <h2 id="trust-title">Kept private, kept safe</h2>
+      </div>
+      <div class="trust">
+        <div><h3>Your school only</h3><p>Each school's data is kept separate. Staff see only what their role allows.</p></div>
+        <div><h3>Every change recorded</h3><p>On Premium, audit logs show who changed what and when.</p></div>
+        <div><h3>Encrypted connection</h3><p>All traffic runs over HTTPS, with daily database backups. <a href="/privacy">Privacy policy</a></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:0" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">FAQ</p><h2 id="faq-title">Questions schools ask</h2></div>
+      <div class="faq">
+        <details><summary>Do parents have to install an app?</summary><p>No. On Standard and Premium, parents can use the Android app or open the parent portal in any browser.</p></details>
+        <details><summary>Is there an iPhone app?</summary><p>Not yet. Parents with an iPhone use the parent portal in Safari, which shows the same information.</p></details>
+        <details><summary>Does it work in Urdu?</summary><p>The parent and teacher app works in English and Urdu, and announcements can be written in both. The office screens are in English.</p></details>
+        <details><summary>Can teachers use the app on the Basic plan?</summary><p>Yes. The teacher app is included on every plan.</p></details>
+        <details><summary>Can we have more than one campus?</summary><p>Yes. Classes, bell schedules and holidays can be set per campus.</p></details>
+        <details><summary>What happens if a payment is late?</summary><p>You get reminders and {site.faq.graceDays} days of grace. After that the system becomes read-only until payment, and your data stays safe.</p></details>
+        <details><summary>Who owns the data?</summary><p>{site.faq.dataExportAnswer}</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="demo" aria-labelledby="demo-title">
+    <div class="wrap">
+      <div>
+        <div class="sec-head" style="margin-bottom:28px">
+          <p class="eyebrow">Book a demo</p>
+          <h2 id="demo-title">See Ilm Vanta with your school's classes</h2>
+          <p class="lede">Tell us a little about your school and we'll call you to set a time.</p>
+        </div>
+        <form class="demo" id="demoForm" action="https://api.web3forms.com/submit" method="post" data-ready={formReady ? 'true' : 'false'}>
+          <input type="hidden" name="access_key" value={site.form.web3formsAccessKey}>
+          <input type="hidden" name="subject" value={site.form.subject}>
+          <input type="hidden" name="from_name" value="ilmvanta.com">
+          <input type="hidden" name="redirect" value={`${site.siteUrl}/#demo`}>
+          <div class="hp" aria-hidden="true"><label>Leave this empty<input type="checkbox" name="botcheck" tabindex="-1"></label></div>
+          <label class="full">School name<input type="text" name="school" required autocomplete="organization" maxlength="120"></label>
+          <label>Your name<input type="text" name="name" required autocomplete="name" maxlength="80"></label>
+          <label>Your role<select name="role"><option>Owner</option><option>Principal</option><option>Administrator</option><option>Other</option></select></label>
+          <label>City<input type="text" name="city" autocomplete="address-level2" maxlength="60"></label>
+          <label>Number of students<select name="students"><option>Under 200</option><option>200 – 500</option><option>500 – 1,000</option><option>Over 1,000</option></select></label>
+          <label>Phone / WhatsApp<input type="tel" name="phone" required autocomplete="tel" placeholder="03XX XXXXXXX" maxlength="20"></label>
+          <label>Email <span class="opt">(optional)</span><input name="email" type="email" autocomplete="email" maxlength="120"></label>
+          <label class="full">Anything we should know? <span class="opt">(optional)</span><textarea name="message" maxlength="1500"></textarea></label>
+          {formReady
+            ? <div class="full"><button class="btn btn-primary" type="submit" id="demoSubmit">Request a demo</button></div>
+            : <>
+                <p class="form-msg off" role="status">Online booking is opening soon. Please <a href={waLink} rel="noopener">WhatsApp us instead</a> and we'll set a time.</p>
+                <div class="full"><button class="btn btn-primary" type="submit" disabled>Request a demo</button></div>
+              </>}
+          <p class="form-msg ok" id="formOk" role="status" hidden>Thank you. We have your request and will call you to set a time.</p>
+          <p class="form-msg err" id="formErr" role="alert" hidden>Sorry, the request didn't go through. Please try again, or <a href={waLink} rel="noopener">WhatsApp us</a>.</p>
+        </form>
+      </div>
+      <div class="ways" id="contact-ways">
+        <div class="way wa"><span class="k">WhatsApp</span><span class="v"><a href={waLink} rel="noopener">{site.contact.phone}</a></span></div>
+        <div class="way"><span class="k">Email</span><span class="v"><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></span><button class="copy" type="button" data-copy={site.contact.email}>Copy</button></div>
+        <div class="way"><span class="k">Phone</span><span class="v">{site.contact.phone}</span><button class="copy" type="button" data-copy={site.contact.phone}>Copy</button></div>
+        <div class="way"><span class="k">Hours</span><span class="v">{site.contact.officeHours}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      // "See it" tabs (arrow keys move between tabs)
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+      function select(tab) {
+        tabs.forEach(function (t) {
+          var on = t === tab;
+          t.setAttribute('aria-selected', String(on));
+          t.tabIndex = on ? 0 : -1;
+          document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+        });
+      }
+      tabs.forEach(function (t, i) {
+        t.addEventListener('click', function () { select(t); });
+        t.addEventListener('keydown', function (e) {
+          var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
+          if (n === null) return;
+          var next = tabs[(n + tabs.length) % tabs.length];
+          select(next); next.focus(); e.preventDefault();
+        });
+      });
+
+      // phone screens
+      var phoneButtons = document.querySelectorAll('[data-phone]');
+      phoneButtons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          phoneButtons.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+          document.querySelectorAll('[data-phone-panel]').forEach(function (p) { p.hidden = p.getAttribute('data-phone-panel') !== b.getAttribute('data-phone'); });
+        });
+      });
+
+      // demo form: sends to Web3Forms without leaving the page (without JavaScript it posts and comes back)
+      var f = document.getElementById('demoForm');
+      if (f && f.dataset.ready === 'true') {
+        var ok = document.getElementById('formOk'), err = document.getElementById('formErr'), btn = document.getElementById('demoSubmit');
+        f.addEventListener('submit', function (e) {
+          e.preventDefault();
+          ok.hidden = true; err.hidden = true;
+          if (!f.checkValidity()) { f.reportValidity(); return; }
+          btn.disabled = true; btn.textContent = 'Sending…';
+          var data = Object.fromEntries(new FormData(f));
+          delete data.redirect;
+          fetch(f.action, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) })
+            .then(function (r) { return r.json().then(function (j) { return r.ok && j.success; }); })
+            .then(function (sent) {
+              if (sent) { ok.hidden = false; f.reset(); } else { err.hidden = false; }
+            }, function () { err.hidden = false; })
+            .then(function () { btn.disabled = false; btn.textContent = 'Request a demo'; });
+        });
+      }
+
+      // copy buttons
+      document.querySelectorAll('.copy').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1500); };
+          try { navigator.clipboard.writeText(b.dataset.copy).then(done); } catch (e) {}
+        });
+      });
+    })();
+  </script>
+</Base>

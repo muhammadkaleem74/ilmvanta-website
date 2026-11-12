@@ -1,0 +1,106 @@
+---
+import '@fontsource-variable/inter/wght.css';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import '../styles/global.css';
+import BrandMark from '../components/BrandMark.astro';
+import site from '../../site.config.json';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  noindex?: boolean;
+}
+const { title, description, path, noindex = false } = Astro.props;
+const canonical = new URL(path, site.siteUrl).href;
+const ogImage = new URL('/og-image.png', site.siteUrl).href;
+const home = path === '/';
+const link = (hash: string) => (home ? hash : `/${hash}`);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>{title}</title>
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin>
+    <meta name="description" content={description}>
+    {noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={canonical}>}
+    <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0B1120" media="(prefers-color-scheme: dark)">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ilm Vanta">
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:url" content={canonical}>
+    <meta property="og:image" content={ogImage}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Ilm Vanta: school management for Pakistan. Dashboard and parent app.">
+    <meta property="og:locale" content="en_PK">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={title}>
+    <meta name="twitter:description" content={description}>
+    <meta name="twitter:image" content={ogImage}>
+    <script is:inline>
+      // Saved theme choice (the header button); without one the page follows the system setting.
+      try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label="Ilm Vanta home"><BrandMark />Ilm Vanta</a>
+        <nav class="nav" aria-label="Main">
+          <a href={link('#features')}>Features</a>
+          <a href={link('#app')}>Mobile app</a>
+          <a href={link('#plans')}>Plans</a>
+          <a href={link('#faq')}>FAQ</a>
+        </nav>
+        <div class="head-cta">
+          <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch between light and dark theme">
+            <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <a class="btn btn-ghost login" href={site.appUrl} rel="noopener">School login</a>
+          <a class="btn btn-primary" href={link('#demo')}>Book a demo</a>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site">
+      <div class="wrap">
+        <span>© {new Date().getFullYear()} Ilm Vanta · ilmvanta.com</span>
+        <nav aria-label="Footer">
+          <a href={link('#features')}>Features</a>
+          <a href={link('#plans')}>Plans</a>
+          <a href="/privacy">Privacy policy</a>
+          <a href="/terms">Terms</a>
+          <a href={site.appUrl} rel="noopener">School login</a>
+        </nav>
+      </div>
+    </footer>
+    <script is:inline>
+      (function () {
+        var b = document.getElementById('themeToggle');
+        if (!b) return;
+        b.addEventListener('click', function () {
+          var root = document.documentElement;
+          var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+          var next = dark ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try { localStorage.setItem('theme', next); } catch (e) {}
+        });
+      })();
+    </script>
+  </body>
+</html>

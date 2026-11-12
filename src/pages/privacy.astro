@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../../site.config.json';
+const L = site.legal;
+const email = L.privacyEmail;
+---
+<Base
+  title="Privacy policy · Ilm Vanta"
+  description="How Ilm Vanta handles school, student, guardian and staff data in the web app, the Android app and on this website."
+  path="/privacy"
+>
+  <article class="legal">
+    <div class="wrap">
+      <p class="eyebrow">Legal</p>
+      <h1>Privacy policy</h1>
+      <p class="meta">Effective {L.effectiveDate}. Applies to ilmvanta.com, the Ilm Vanta web app at app.ilmvanta.com and the Ilm Vanta Android app.</p>
+
+      <nav class="toc" aria-label="On this page">
+        <b>On this page</b>
+        <ol>
+          <li><a href="#who">Who we are</a></li>
+          <li><a href="#roles">Schools and Ilm Vanta</a></li>
+          <li><a href="#school-data">Data schools keep in Ilm Vanta</a></li>
+          <li><a href="#automatic">Data recorded automatically</a></li>
+          <li><a href="#app">The Android app</a></li>
+          <li><a href="#notifications">Notifications and email</a></li>
+          <li><a href="#ai">The AI assistant</a></li>
+          <li><a href="#website">This website</a></li>
+          <li><a href="#cookies">Cookies</a></li>
+          <li><a href="#providers">Service providers</a></li>
+          <li><a href="#retention">How long we keep data</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#children">Children</a></li>
+          <li><a href="#rights">Your choices and requests</a></li>
+          <li><a href="#changes">Changes and contact</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="who">1. Who we are</h2>
+      <p>Ilm Vanta is school management software for schools in Pakistan. It is provided by {L.entityName}, {L.address} ("Ilm Vanta", "we", "us"). You can reach us about privacy at <a href={`mailto:${email}`}>{email}</a>.</p>
+
+      <h2 id="roles">2. Schools and Ilm Vanta</h2>
+      <p>Each school decides what information it keeps in Ilm Vanta and why. For that information the <strong>school is responsible for it</strong> (the data controller) and <strong>Ilm Vanta processes it on the school's behalf</strong> (the data processor), only to provide the service to that school. We do not sell this information, use it for advertising, or share it with other schools.</p>
+      <p>For the information you send us through this website, for example a demo request, Ilm Vanta is responsible.</p>
+
+      <h2 id="school-data">3. Data schools keep in Ilm Vanta</h2>
+      <p>Depending on the modules a school uses, its staff may enter:</p>
+      <ul>
+        <li><strong>Students:</strong> name, date of birth, gender, nationality, religion, registration and GR numbers, campus, class and section, enrolment history, photo (if added), previous school, admission applications, entrance test results and documents.</li>
+        <li><strong>Parents and guardians:</strong> name, relationship to the student, CNIC number, phone number, email address, occupation, address, and whether they may collect the child.</li>
+        <li><strong>School records:</strong> attendance, fee challans, discounts and payments, exam marks, report cards and teacher remarks, timetables and covers, and notes and follow-ups about a student's progress.</li>
+        <li><strong>Staff:</strong> name, father's or spouse's name, gender, date of birth, CNIC number, phone, email, address, qualification, campus, department and designation, joining date, bank name and account number, salary structure, payroll and payslips (including provident fund, EOBI and tax deductions), staff attendance and leave.</li>
+        <li><strong>User accounts:</strong> username, name, email address, role, and the password, which is stored only as a secure hash. Parents sign in with their CNIC number as the username.</li>
+      </ul>
+
+      <h2 id="automatic">4. Data recorded automatically</h2>
+      <ul>
+        <li><strong>Audit log</strong> (Premium plan): which user did what and when, with the IP address and browser.</li>
+        <li><strong>Sign-in attempts:</strong> time, result, IP address and browser, used to protect accounts.</li>
+        <li><strong>Server logs:</strong> technical logs used to keep the service running and to fix errors.</li>
+        <li><strong>Notification delivery log:</strong> which notifications were sent, by which channel, and whether delivery worked.</li>
+      </ul>
+
+      <h2 id="app">5. The Android app</h2>
+      <p>The Ilm Vanta app is for parents and teachers of schools that use Ilm Vanta. It shows the same school records as the web app, limited to what the signed-in person is allowed to see. The app:</p>
+      <ul>
+        <li>creates a random installation ID and sends it with the device's name or model and the platform (Android) when you sign in, so you and your school can see and end your sign-ins;</li>
+        <li>keeps you signed in with a token stored in the phone's secure storage; the server keeps only a hash of it, and a sign-in lasts at most 90 days;</li>
+        <li>asks your permission before showing notifications; if you allow them, the phone's push token is stored with your sign-in and removed when you sign out;</li>
+        <li>keeps recent data on the phone so it can be read without internet (and, for teachers, attendance marked offline until it can be sent); this copy is encrypted, cleared when you sign out, and removed after 30 days;</li>
+        <li>creates a temporary file when you share a challan or report card, and deletes it after sharing;</li>
+        <li>remembers your language choice (English or Urdu).</li>
+      </ul>
+      <p>The app does not use your location, camera, microphone, contacts, photos or files, and it contains no advertising, analytics or crash-reporting tools.</p>
+
+      <h2 id="notifications">6. Notifications and email</h2>
+      <p>Schools can send notices, absence alerts and fee reminders to the app's inbox, as push notifications, and by email. Push notifications are delivered through Expo's push service and Google's Firebase Cloud Messaging. What shows on a locked phone never includes CNIC numbers, phone numbers or registration numbers; a money amount appears only in the message that a payment was received. Email is sent through Google's Gmail SMTP service. WhatsApp buttons open the sender's own WhatsApp with a ready message; Ilm Vanta does not send WhatsApp messages itself.</p>
+
+      <h2 id="ai">7. The AI assistant (Ask Ilm Vanta)</h2>
+      <p>Ask Ilm Vanta is <strong>off by default</strong>. We switch it on only for a school that asks for it, and only staff can use it; parents cannot. When a staff member asks a question, Ilm Vanta looks up the records that person is already allowed to see (for example a student's name, attendance, marks and subjects) and sends the question with those records to <strong>Google's Gemini API</strong> to write the answer. The assistant can only read; it cannot change any record. Google processes this data under the Gemini API terms that apply to our account. A school that does not want this keeps the assistant switched off.</p>
+
+      <h2 id="website">8. This website</h2>
+      <p>When you request a demo we receive the details you type: school name, your name, role, city, number of students, phone or WhatsApp number, email address and message. The form is delivered to us by Web3Forms. We use these details only to reply to you and arrange a demo.</p>
+      <p>This website has no analytics, advertising or tracking scripts. It is hosted by Netlify, whose servers record standard technical logs (such as IP address and browser) when pages are requested.</p>
+
+      <h2 id="cookies">9. Cookies</h2>
+      <p>This website sets no cookies. If you choose the light or dark theme, that choice is saved in your own browser and never sent to us.</p>
+      <p>The web app uses only cookies that it needs to work: one that keeps you signed in, one that remembers which school you are signing in to, and one for your language. There are no advertising or analytics cookies.</p>
+
+      <h2 id="providers">10. Service providers</h2>
+      <table>
+        <thead><tr><th>Provider</th><th>What for</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr><td>SmarterASP.NET</td><td>Hosting of the web app, its database and files</td><td>Amsterdam, Netherlands</td></tr>
+          <tr><td>Google (Gmail SMTP)</td><td>Sending email</td><td>Google's data centres</td></tr>
+          <tr><td>Expo and Google Firebase Cloud Messaging</td><td>Delivering push notifications to the app</td><td>United States and Google's data centres</td></tr>
+          <tr><td>Google (Gemini API)</td><td>The AI assistant, only for schools that switch it on</td><td>Google's data centres</td></tr>
+          <tr><td>Netlify</td><td>Hosting this website</td><td>Global network</td></tr>
+          <tr><td>Web3Forms</td><td>Delivering demo requests from this website</td><td>Provider's servers</td></tr>
+        </tbody>
+      </table>
+      <p>This means data may be processed outside Pakistan. We share with each provider only what it needs for its task.</p>
+
+      <h2 id="retention">11. How long we keep data</h2>
+      <ul>
+        <li><strong>School data:</strong> for as long as the school's account is active. When an account ends, the school can ask for an export, and we delete the school's data 90 days after the account ends.</li>
+        <li><strong>Backups:</strong> the database is backed up daily; backups are overwritten as they age.</li>
+        <li><strong>Audit log:</strong> 90 days by default (a school can change this).</li>
+        <li><strong>Notification inbox:</strong> 180 days; delivery log: 90 days (a school can change these).</li>
+        <li><strong>App sign-ins:</strong> at most 90 days; data kept on the phone: at most 30 days, and cleared at sign-out.</li>
+        <li><strong>Demo requests:</strong> as long as needed to answer and follow up your enquiry.</li>
+      </ul>
+
+      <h2 id="security">12. Security</h2>
+      <p>All connections use HTTPS. Passwords and app sign-in tokens are stored only as hashes. Each school's data is kept separate, and staff see only what their role allows. Accounts are locked after repeated wrong passwords. Data kept on phones is encrypted. No system is perfectly secure, and we will tell affected schools without delay if we learn of a breach that affects their data.</p>
+
+      <h2 id="children">13. Children</h2>
+      <p>Schools keep records about their students, who are children, as part of running the school. Children do not sign in to Ilm Vanta: only school staff and parents or guardians aged 18 or over do. Schools are responsible for informing parents about the records they keep.</p>
+
+      <h2 id="rights">14. Your choices and requests</h2>
+      <p>If you are a parent, guardian, student or staff member, please contact <strong>your school</strong> first to see, correct or delete information it keeps about you or your child; the school can make most changes itself, and we help schools with any request. You can also write to us at <a href={`mailto:${email}`}>{email}</a> and we will pass your request to the school.</p>
+      <p>In the app you can turn notifications off in your phone's settings, mute types of notices, and sign out at any time, which removes the data stored on the phone.</p>
+
+      <h2 id="changes">15. Changes and contact</h2>
+      <p>We will update this page when our practices change and show the new effective date at the top. For important changes we will also inform schools. Questions: <a href={`mailto:${email}`}>{email}</a>.</p>
+    </div>
+  </article>
+</Base>

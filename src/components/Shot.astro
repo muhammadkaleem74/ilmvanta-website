@@ -1,0 +1,31 @@
+---
+// A screenshot as AVIF/WebP at several widths (with width/height, lazy by default) inside a light frame:
+// "browser" (address bar showing the app's real address), "doc" (a printed document) or "phone".
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  frame?: 'browser' | 'doc' | 'phone' | 'none';
+  url?: string;
+  sizes?: string;
+  widths?: number[];
+  eager?: boolean;
+}
+const { src, alt, frame = 'browser', url = 'app.ilmvanta.com', sizes = '(max-width: 900px) 100vw, 820px', widths, eager = false } = Astro.props;
+const w = widths ?? (frame === 'phone' ? [280, 420, 580, 860] : [480, 820, 1200, 1640]).filter((x) => x <= src.width);
+---
+{frame === 'browser' && (
+  <div class="browser">
+    <div class="bar" aria-hidden="true"><span class="dots"><i></i><i></i><i></i></span><span class="url">{url}</span></div>
+    <Picture src={src} alt={alt} formats={['avif', 'webp']} fallbackFormat="png" widths={w} sizes={sizes} loading={eager ? 'eager' : 'lazy'} decoding="async" quality={70} />
+  </div>
+)}
+{frame === 'doc' && (
+  <div class="doc"><Picture src={src} alt={alt} formats={['avif', 'webp']} fallbackFormat="png" widths={w} sizes={sizes} loading={eager ? 'eager' : 'lazy'} decoding="async" quality={72} /></div>
+)}
+{frame === 'phone' && (
+  <div class="phone"><Picture src={src} alt={alt} formats={['avif', 'webp']} fallbackFormat="png" widths={w} sizes="270px" loading={eager ? 'eager' : 'lazy'} decoding="async" quality={72} /></div>
+)}
+{frame === 'none' && <Picture src={src} alt={alt} formats={['avif', 'webp']} fallbackFormat="png" widths={w} sizes={sizes} loading={eager ? 'eager' : 'lazy'} decoding="async" quality={70} />}

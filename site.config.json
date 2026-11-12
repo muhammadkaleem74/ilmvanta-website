@@ -1,0 +1,53 @@
+{
+  "_about": "The ONE place for contact details, plans and business answers. Values marked TODO are placeholders: the build prints a warning for each one still unset.",
+  "siteUrl": "https://ilmvanta.com",
+  "appUrl": "https://app.ilmvanta.com",
+  "contact": {
+    "whatsappNumber": "TODO_WHATSAPP_923XXXXXXXXX",
+    "phone": "TODO_PHONE_+92 3XX XXXXXXX",
+    "email": "info@ilmvanta.com",
+    "officeHours": "Mon–Sat, 9 am – 6 pm"
+  },
+  "form": {
+    "web3formsAccessKey": "WEB3FORMS_ACCESS_KEY",
+    "subject": "New demo request from ilmvanta.com"
+  },
+  "pricing": {
+    "showStartingPrice": false,
+    "startingPriceText": "from Rs ___ per student per month"
+  },
+  "plans": [
+    {
+      "name": "Basic",
+      "for": "For a school starting with fees and attendance",
+      "modules": ["Admissions and students", "Daily attendance", "Fee challans and receipts", "Notifications (app inbox, email, WhatsApp button)", "Teacher app for attendance"]
+    },
+    {
+      "name": "Standard",
+      "for": "For a full academic year",
+      "highlight": true,
+      "badge": "Most schools",
+      "modules": ["Everything in Basic", "+Exams and report cards", "+Parent portal and parent app", "+Timetable and covers"]
+    },
+    {
+      "name": "Premium",
+      "for": "For schools with their own staff office",
+      "modules": ["Everything in Standard", "+Staff HR and leave", "+Payroll and payslips", "+Audit logs"]
+    }
+  ],
+  "addOn": {
+    "name": "Ask Ilm Vanta",
+    "text": "An optional AI assistant that answers staff questions about students, attendance and results. Switched on per school, on request."
+  },
+  "faq": {
+    "graceDays": 2,
+    "dataExportAnswer": "Your school does. We can provide a full export of your school's data on request.",
+    "setupImportHelp": true
+  },
+  "legal": {
+    "entityName": "TODO_LEGAL_ENTITY_NAME",
+    "address": "TODO_LEGAL_ADDRESS",
+    "privacyEmail": "info@ilmvanta.com",
+    "effectiveDate": "TODO_EFFECTIVE_DATE"
+  }
+}
