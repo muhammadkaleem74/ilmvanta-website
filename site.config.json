@@ -3,8 +3,8 @@
   "siteUrl": "https://ilmvanta.com",
   "appUrl": "https://app.ilmvanta.com",
   "contact": {
-    "whatsappNumber": "TODO_WHATSAPP_923XXXXXXXXX",
-    "phone": "TODO_PHONE_+92 3XX XXXXXXX",
+    "whatsappNumber": "+923097477386",
+    "phone": "+923097477386",
     "email": "info@ilmvanta.com",
     "officeHours": "Mon–Sat, 9 am – 6 pm"
   },
@@ -45,9 +45,9 @@
     "setupImportHelp": true
   },
   "legal": {
-    "entityName": "TODO_LEGAL_ENTITY_NAME",
-    "address": "TODO_LEGAL_ADDRESS",
+    "entityName": "Muhammad Kaleem (Ilm Vanta)",
+    "address": "Lahore Pakistan",
     "privacyEmail": "info@ilmvanta.com",
-    "effectiveDate": "TODO_EFFECTIVE_DATE"
+    "effectiveDate": "13-11-2026"
   }
 }
