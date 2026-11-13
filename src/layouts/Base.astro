@@ -69,7 +69,7 @@ const link = (hash: string) => (home ? hash : `/${hash}`);
             <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
             <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
-          <a class="btn btn-ghost login" href={site.appUrl} rel="noopener">School login</a>
+          <a class="btn btn-ghost login" href={site.appUrl} target="_blank" rel="noopener">School login</a>
           <a class="btn btn-primary" href={link('#demo')}>Book a demo</a>
         </div>
       </div>
@@ -85,7 +85,7 @@ const link = (hash: string) => (home ? hash : `/${hash}`);
           <a href={link('#plans')}>Plans</a>
           <a href="/privacy">Privacy policy</a>
           <a href="/terms">Terms</a>
-          <a href={site.appUrl} rel="noopener">School login</a>
+          <a href={site.appUrl} target="_blank" rel="noopener">School login</a>
         </nav>
       </div>
     </footer>
