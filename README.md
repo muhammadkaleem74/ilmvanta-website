@@ -13,7 +13,7 @@ lives at <https://app.ilmvanta.com> and is a different project.
 | `/terms` | `src/pages/terms.astro` (draft, needs legal review) |
 | 404 | `src/pages/404.astro` |
 
-Also built: `sitemap-index.xml`, `robots.txt`, favicon set, `site.webmanifest`, `og-image.png`, Netlify `_headers`.
+Also built: `sitemap-index.xml`, `robots.txt`, favicon set, `site.webmanifest`, `og-image.png`, `CNAME` (custom domain for GitHub Pages).
 
 ## Edit the business details
 
@@ -56,6 +56,11 @@ Astro converts them to AVIF and WebP at several widths (`src/components/Shot.ast
 
 ## Hosting
 
-Netlify, connected to this repository: every push to `main` builds and publishes (`netlify.toml`). DNS stays at
-GoDaddy; see the setup notes in the hand-over message (apex `A @ → 75.2.60.5`, `CNAME www → <site>.netlify.app`).
-No analytics or tracking scripts are included.
+GitHub Pages. `.github/workflows/deploy.yml` builds the site, runs html-validate and publishes `dist/` on every push to
+`main` (or by hand: Actions → Deploy to GitHub Pages → Run workflow). Repo Settings → Pages → Source must be
+"GitHub Actions"; custom domain `ilmvanta.com` (also in `public/CNAME`), Enforce HTTPS on.
+
+DNS stays at GoDaddy: four `A @` records to GitHub Pages' IPs and `CNAME www → muhammadkaleem74.github.io`. The
+`app` record (app.ilmvanta.com) is a separate host and must not change. GitHub Pages can't set response headers, so
+there is no CSP/HSTS header from the host; the site has no third-party scripts. No analytics or tracking scripts are
+included.
