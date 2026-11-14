@@ -26,9 +26,7 @@ const link = (hash: string) => (home ? hash : `/${hash}`);
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin>
     <meta name="description" content={description}>
     {noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={canonical}>}
-    <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0B1120" media="(prefers-color-scheme: dark)">
-    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#F8FAFC">
     <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -47,10 +45,6 @@ const link = (hash: string) => (home ? hash : `/${hash}`);
     <meta name="twitter:title" content={title}>
     <meta name="twitter:description" content={description}>
     <meta name="twitter:image" content={ogImage}>
-    <script is:inline>
-      // Saved theme choice (the header button); without one the page follows the system setting.
-      try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
-    </script>
     <slot name="head" />
   </head>
   <body>
@@ -60,17 +54,14 @@ const link = (hash: string) => (home ? hash : `/${hash}`);
         <a class="brand" href="/" aria-label="Ilm Vanta home"><BrandMark />Ilm Vanta</a>
         <nav class="nav" aria-label="Main">
           <a href={link('#features')}>Features</a>
-          <a href={link('#app')}>Mobile app</a>
-          <a href={link('#plans')}>Plans</a>
+          <a href={link('#solutions')}>Solutions</a>
+          <a href={link('#mobile')}>Mobile App</a>
+          <a href={link('#pricing')}>Pricing</a>
           <a href={link('#faq')}>FAQ</a>
         </nav>
         <div class="head-cta">
-          <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch between light and dark theme">
-            <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-            <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </button>
-          <a class="btn btn-ghost login" href={site.appUrl} target="_blank" rel="noopener">School login</a>
-          <a class="btn btn-primary" href={link('#demo')}>Book a demo</a>
+          <a class="btn btn-ghost login" href={site.appUrl} target="_blank" rel="noopener">School Login</a>
+          <a class="btn btn-primary" href={link('#demo')}>Book a Free Demo</a>
         </div>
       </div>
     </header>
@@ -79,28 +70,16 @@ const link = (hash: string) => (home ? hash : `/${hash}`);
     </main>
     <footer class="site">
       <div class="wrap">
-        <span>© {new Date().getFullYear()} Ilm Vanta · ilmvanta.com</span>
+        <span>© {new Date().getFullYear()} Ilm Vanta · School management for Pakistan</span>
         <nav aria-label="Footer">
           <a href={link('#features')}>Features</a>
-          <a href={link('#plans')}>Plans</a>
+          <a href={link('#solutions')}>Solutions</a>
+          <a href={link('#pricing')}>Pricing</a>
           <a href="/privacy">Privacy policy</a>
           <a href="/terms">Terms</a>
           <a href={site.appUrl} target="_blank" rel="noopener">School login</a>
         </nav>
       </div>
     </footer>
-    <script is:inline>
-      (function () {
-        var b = document.getElementById('themeToggle');
-        if (!b) return;
-        b.addEventListener('click', function () {
-          var root = document.documentElement;
-          var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-          var next = dark ? 'light' : 'dark';
-          root.dataset.theme = next;
-          try { localStorage.setItem('theme', next); } catch (e) {}
-        });
-      })();
-    </script>
   </body>
 </html>
