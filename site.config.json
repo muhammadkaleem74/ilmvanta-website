@@ -14,7 +14,7 @@
   },
   "pricing": {
     "showStartingPrice": false,
-    "startingPriceText": "from Rs ___ per student per month"
+    "startingPriceText": "from Rs 50/- per student per month"
   },
   "plans": [
     {
@@ -48,6 +48,6 @@
     "entityName": "Muhammad Kaleem (Ilm Vanta)",
     "address": "Lahore Pakistan",
     "privacyEmail": "info@ilmvanta.com",
-    "effectiveDate": "13-11-2026"
+    "effectiveDate": "15-11-2026"
   }
 }

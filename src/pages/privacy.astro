@@ -46,11 +46,11 @@ const email = L.privacyEmail;
       <h2 id="school-data">3. Data schools keep in Ilm Vanta</h2>
       <p>Depending on the modules a school uses, its staff may enter:</p>
       <ul>
-        <li><strong>Students:</strong> name, date of birth, gender, nationality, religion, registration and GR numbers, campus, class and section, enrolment history, photo (if added), previous school, admission applications, entrance test results and documents.</li>
-        <li><strong>Parents and guardians:</strong> name, relationship to the student, CNIC number, phone number, email address, occupation, address, and whether they may collect the child.</li>
-        <li><strong>School records:</strong> attendance, fee challans, discounts and payments, exam marks, report cards and teacher remarks, timetables and covers, and notes and follow-ups about a student's progress.</li>
-        <li><strong>Staff:</strong> name, father's or spouse's name, gender, date of birth, CNIC number, phone, email, address, qualification, campus, department and designation, joining date, bank name and account number, salary structure, payroll and payslips (including provident fund, EOBI and tax deductions), staff attendance and leave.</li>
-        <li><strong>User accounts:</strong> username, name, email address, role, and the password, which is stored only as a secure hash. Parents sign in with their CNIC number as the username.</li>
+        <li><strong>Students:</strong> name, date of birth, gender, nationality, religion, registration and GR numbers, campus, class and section, enrolment history, photo (if added), previous school, admission applications, entrance test results, and documents the school uploads (for example a B-Form or birth certificate, a school leaving certificate, previous result cards and medical notes).</li>
+        <li><strong>Parents and guardians:</strong> name, relationship to the student, CNIC number, phone number, email address, occupation, address, whether they may collect the child, and, if the school adds them, images of the CNIC.</li>
+        <li><strong>School records:</strong> attendance, fee challans, discounts and payments (with an image of the bank deposit slip if the school adds one), exam marks, report cards and teacher remarks, timetables and covers, and notes and follow-ups about a student's progress.</li>
+        <li><strong>Staff:</strong> name, father's or spouse's name, gender, date of birth, CNIC number, phone, email, address, qualification, campus, department and designation, joining date, bank name and account number, salary structure, payroll and payslips (including provident fund, EOBI and tax deductions), staff attendance and leave (with a supporting file, such as a medical certificate, if the staff member adds one), a photo, and documents the school uploads (CNIC, degrees, experience letters, contract, police verification).</li>
+        <li><strong>User accounts:</strong> username, name, email address, role, an optional profile picture, and the password, which is stored only as a secure hash. Parents sign in with their CNIC number as the username.</li>
       </ul>
 
       <h2 id="automatic">4. Data recorded automatically</h2>
@@ -91,7 +91,8 @@ const email = L.privacyEmail;
       <table>
         <thead><tr><th>Provider</th><th>What for</th><th>Where</th></tr></thead>
         <tbody>
-          <tr><td>SmarterASP.NET</td><td>Hosting of the web app, its database and files</td><td>Amsterdam, Netherlands</td></tr>
+          <tr><td>SmarterASP.NET</td><td>Hosting of the web app and its database</td><td>Amsterdam, Netherlands</td></tr>
+          <tr><td>Backblaze (B2 Cloud Storage)</td><td>Storing photos and documents uploaded by schools (private storage)</td><td>EU Central: Amsterdam, Netherlands</td></tr>
           <tr><td>Google (Gmail SMTP)</td><td>Sending email</td><td>Google's data centres</td></tr>
           <tr><td>Expo and Google Firebase Cloud Messaging</td><td>Delivering push notifications to the app</td><td>United States and Google's data centres</td></tr>
           <tr><td>Google (Gemini API)</td><td>The AI assistant, only for schools that switch it on</td><td>Google's data centres</td></tr>
@@ -104,7 +105,9 @@ const email = L.privacyEmail;
       <h2 id="retention">11. How long we keep data</h2>
       <ul>
         <li><strong>School data:</strong> for as long as the school's account is active. When an account ends, the school can ask for an export, and we delete the school's data 90 days after the account ends.</li>
-        <li><strong>Backups:</strong> the database is backed up daily; backups are overwritten as they age.</li>
+        <li><strong>Photos and documents:</strong> deleted with the record they belong to; after a deletion they can no longer be opened and are erased from storage within 90 days.</li>
+        <li><strong>Backups:</strong> the database is backed up daily; backups are overwritten as they age. Photos and documents are not in the database backup: a deleted or replaced file is kept in storage for 30 days so it can be restored, then erased.</li>
+        <li><strong>Document access log:</strong> who opened which document and when, 90 days by default (the same setting as the audit log).</li>
         <li><strong>Audit log:</strong> 90 days by default (a school can change this).</li>
         <li><strong>Notification inbox:</strong> 180 days; delivery log: 90 days (a school can change these).</li>
         <li><strong>App sign-ins:</strong> at most 90 days; data kept on the phone: at most 30 days, and cleared at sign-out.</li>
@@ -112,7 +115,7 @@ const email = L.privacyEmail;
       </ul>
 
       <h2 id="security">12. Security</h2>
-      <p>All connections use HTTPS. Passwords and app sign-in tokens are stored only as hashes. Each school's data is kept separate, and staff see only what their role allows. Accounts are locked after repeated wrong passwords. Data kept on phones is encrypted. No system is perfectly secure, and we will tell affected schools without delay if we learn of a breach that affects their data.</p>
+      <p>All connections use HTTPS. Passwords and app sign-in tokens are stored only as hashes. Each school's data is kept separate, and staff see only what their role allows. Accounts are locked after repeated wrong passwords. Uploaded photos are cleaned of their location and other hidden information when they are saved; photos and documents are kept in private storage and open only through links that expire after 5 minutes. Data kept on phones is encrypted. No system is perfectly secure, and we will tell affected schools without delay if we learn of a breach that affects their data.</p>
 
       <h2 id="children">13. Children</h2>
       <p>Schools keep records about their students, who are children, as part of running the school. Children do not sign in to Ilm Vanta: only school staff and parents or guardians aged 18 or over do. Schools are responsible for informing parents about the records they keep.</p>
