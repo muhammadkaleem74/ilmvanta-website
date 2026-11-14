@@ -12,6 +12,7 @@
     "build": "astro build",
     "preview": "astro preview --port 4321",
     "check:html": "html-validate \"dist/**/*.html\"",
+    "check:homepage": "node scripts/verify-homepage.mjs",
     "images": "node scripts/import-screenshots.mjs"
   },
   "dependencies": {
