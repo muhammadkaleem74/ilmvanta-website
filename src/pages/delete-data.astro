@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../../site.config.json';
+
+const formReady = !!site.form.web3formsAccessKey && site.form.web3formsAccessKey !== 'WEB3FORMS_ACCESS_KEY';
+---
+<Base
+  title="Data deletion request · Ilm Vanta"
+  description="Request deletion of staff, parent or student data held in Ilm Vanta and learn which school records may need to be retained."
+  path="/delete-data"
+>
+  <article class="legal deletion-page">
+    <div class="wrap">
+      <p class="eyebrow">Privacy</p>
+      <h1>Request data deletion</h1>
+      <p class="meta">For Ilm Vanta school accounts and the Android app. We acknowledge requests promptly and aim to complete them within 30 days.</p>
+
+      <div class="request-summary" role="group" aria-label="Deletion request summary">
+        <div><b>Who can request</b><span>Staff and parents or guardians may request their own data. A parent, guardian or the school may request for a student.</span></div>
+        <div><b>What happens next</b><span>We verify the requester, involve the school that controls the record, and confirm what was deleted or retained.</span></div>
+        <div><b>Timeline</b><span>Within 30 days after we have enough information to verify and process the request.</span></div>
+      </div>
+
+      <h2>What can be deleted</h2>
+      <p>Depending on your relationship with the school and its legal duties, this can include your Ilm Vanta user account, profile picture, contact details, app sessions and push token, data cached by the app, and records that the school no longer needs. Signing out already removes encrypted school data stored by the app on that phone.</p>
+
+      <h2>What the school may keep</h2>
+      <p>The school is responsible for student, guardian and staff records in Ilm Vanta. It may need to retain admission and enrolment history, attendance, fees and receipts, examination results, payroll, tax, employment, safeguarding or audit records for legal, regulatory or legitimate school-record purposes. Where a record must be kept, the school may restrict it, correct it or remove information that is no longer necessary instead of deleting the whole record.</p>
+      <p>We do not decide this for the school. We forward the request to the relevant school, help it carry out the approved deletion, and explain any information that must be retained. See the <a href="/privacy">privacy policy</a> for retention and service-provider details.</p>
+
+      <h2 id="request-form">Send a request</h2>
+      <p>Do not send passwords, full CNIC numbers, medical details or copies of identity documents through this form. We will contact you if verification is needed.</p>
+
+      <form class="demo-form deletion-form" id="deletionForm" action="https://api.web3forms.com/submit" method="post" data-ready={formReady ? 'true' : 'false'}>
+        <input type="hidden" name="access_key" value={site.form.web3formsAccessKey}>
+        <input type="hidden" name="subject" value="Ilm Vanta data deletion request">
+        <input type="hidden" name="from_name" value="ilmvanta.com">
+        <input type="hidden" name="redirect" value={`${site.siteUrl}/delete-data#request-form`}>
+        <div class="hp" aria-hidden="true"><label>Leave this empty<input type="checkbox" name="botcheck" tabindex="-1"></label></div>
+
+        <div class="form-head"><span>01</span><p><b>Tell us enough to locate the account</b><small>Required fields are marked</small></p></div>
+        <label>Your name <em>Required</em><input type="text" name="name" required autocomplete="name" maxlength="80"></label>
+        <label>Email <em>Required</em><input type="email" name="email" required autocomplete="email" maxlength="120"></label>
+        <label>Phone <small>Optional</small><input type="tel" name="phone" autocomplete="tel" maxlength="20"></label>
+        <label>School name <em>Required</em><input type="text" name="school" required autocomplete="organization" maxlength="120"></label>
+        <label>Your relationship <em>Required</em><select name="requester_role" required><option value="">Choose one</option><option>Staff member</option><option>Parent or guardian</option><option>School representative</option></select></label>
+        <label>Request concerns <em>Required</em><select name="request_for" required><option value="">Choose one</option><option>My staff account or records</option><option>My parent or guardian account or records</option><option>My child's student records</option><option>A student's records (school request)</option></select></label>
+        <label class="full">Account username or child's name <em>Required</em><input type="text" name="account_reference" required maxlength="120" aria-describedby="reference-help"><small id="reference-help">Do not enter a password or full CNIC.</small></label>
+        <label class="full">What would you like deleted? <em>Required</em><textarea name="message" required maxlength="1500"></textarea></label>
+        <label class="full consent"><input type="checkbox" name="confirmation" required><span>I confirm that the information above is accurate and that Ilm Vanta may contact me and the named school to verify this request.</span></label>
+
+        {formReady ? <div class="full submit-row"><button class="btn btn-primary" type="submit" id="deletionSubmit">Send deletion request</button><span>We will acknowledge the request using the email above.</span></div> : <p class="form-msg off" role="status">The online form is temporarily unavailable. Email <a href={`mailto:${site.legal.privacyEmail}`}>{site.legal.privacyEmail}</a>.</p>}
+        <p class="form-msg ok" id="deletionOk" role="status" hidden>Thank you. Your request has been sent. We will contact you about verification and next steps.</p>
+        <p class="form-msg err" id="deletionErr" role="alert" hidden>Sorry, the request did not go through. Please try again or email <a href={`mailto:${site.legal.privacyEmail}`}>{site.legal.privacyEmail}</a>.</p>
+      </form>
+    </div>
+  </article>
+
+  <script is:inline>
+    (function () {
+      var form = document.getElementById('deletionForm');
+      if (!form || form.dataset.ready !== 'true') return;
+      var ok = document.getElementById('deletionOk');
+      var err = document.getElementById('deletionErr');
+      var submit = document.getElementById('deletionSubmit');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        ok.hidden = true;
+        err.hidden = true;
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        submit.disabled = true;
+        submit.textContent = 'Sending…';
+        var data = Object.fromEntries(new FormData(form));
+        delete data.redirect;
+        fetch(form.action, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) })
+          .then(function (response) { return response.json().then(function (json) { return response.ok && json.success; }); })
+          .then(function (sent) { if (sent) { ok.hidden = false; form.reset(); } else err.hidden = false; }, function () { err.hidden = false; })
+          .then(function () { submit.disabled = false; submit.textContent = 'Send deletion request'; });
+      });
+    })();
+  </script>
+</Base>

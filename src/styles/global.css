@@ -295,6 +295,14 @@ textarea { min-height: 90px; resize: vertical; }
 .legal th, .legal td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; }
 .legal .toc { padding: 18px 22px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
 .legal .toc ol { columns: 2; padding-left: 20px; }
+.request-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-block: 30px 10px; }
+.request-summary > div { display: grid; gap: 7px; padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+.request-summary b { color: var(--navy); font-size: 13px; }
+.request-summary span { color: var(--muted); font-size: 12px; line-height: 1.55; }
+.deletion-form { position: relative; margin-top: 18px; border: 1px solid var(--line); box-shadow: 0 24px 60px -45px #0f172a; }
+.deletion-form .consent { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 10px; font-weight: 500; line-height: 1.5; }
+.deletion-form .consent input { grid-column: 1; width: 18px; min-height: 18px; margin-top: 2px; }
+.deletion-form .consent span { grid-column: 2; }
 .lost { padding-block: 100px; text-align: center; }
 .lost .code { color: var(--indigo); font-size: clamp(80px,14vw,150px); font-weight: 800; line-height: 1; }
 .lost h1 { margin-block: 12px; font-size: 36px; }
@@ -307,6 +315,7 @@ footer.site nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 footer.site a { text-decoration: none; }
 footer.site a:hover { color: #fff; }
 
+@media (max-width: 700px) { .request-summary { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .wrap { width: min(100% - 28px, 1180px); } .section-lead h2, .tour-heading h2, .mobile-narrative h2, .why-main h2, .pricing-lead h2, .faq-intro h2, .demo-copy h2 { font-size: 35px; } .legal .toc ol { columns: 1; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
 .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
