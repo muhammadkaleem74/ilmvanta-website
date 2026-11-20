@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../../site.config.json';
+---
+<Base title="Pricing | Ilm Vanta" description="Compare Basic, Standard and Premium and choose a billing preference for your school." path="/pricing">
+<section class="pricing-section" id="pricing" aria-labelledby="pricing-title">
+      <div class="container section">
+        <div class="section-head price-head">
+          <div><p class="eyebrow">Pricing</p><h1 id="pricing-title">A plan for how your school works.</h1></div>
+          <p>Pricing is based on student count. Choose a billing preference, then request a quote for your school.</p>
+        </div>
+        <div class="billing-row">
+          <div class="billing-options" role="group" aria-label="Billing preference">
+            <button type="button" data-billing="Monthly" aria-pressed="true">Monthly</button>
+            <button type="button" data-billing="Quarterly" aria-pressed="false">Quarterly</button>
+            <button type="button" data-billing="Yearly" aria-pressed="false">Yearly</button>
+          </div>
+          <p id="billing-note" aria-live="polite">Pay month to month.</p>
+        </div>
+        <div class="plan-grid">
+          {site.plans.map((plan) => (
+            <article class:list={["plan", { "plan-primary": plan.highlight }]}>
+              <h2>{plan.name}</h2>
+              <p>{plan.for}</p>
+              <strong>{site.pricing.showStartingPrice ? site.pricing.startingPriceText : 'Custom quote'}</strong>
+              <ul>{plan.modules.map((module) => <li>{module.replace(/^\+/, '')}</li>)}</ul>
+              <a class:list={["button", plan.highlight ? "button-primary" : "button-white"]}
+                href={`/demo?plan=${encodeURIComponent(plan.name)}&billing=Monthly`}
+                data-plan={plan.name} aria-label={`Request a quote for ${plan.name}`}>Request a quote</a>
+            </article>
+          ))}
+        </div>
+        <aside class="pricing-extra"><svg aria-hidden="true" class="icon"><use href="#i-globe"/></svg><p><strong>{site.addOn.name}</strong> {site.addOn.text}</p></aside>
+      </div>
+    </section>
+</Base>

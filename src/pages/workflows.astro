@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Media from '../components/Media.astro';
+import students from '../assets/shots/web/students-list.png';
+import challan from '../assets/shots/web/fee-challan-detail.png';
+---
+<Base title="School workflows | Ilm Vanta" description="Explore how school records connect across admissions, fees, attendance, exams, timetables and payroll." path="/workflows">
+<section class="section container" id="workflows" aria-labelledby="workflows-title">
+      <div class="section-head">
+        <div><p class="eyebrow">Workflows</p><h1 id="workflows-title">From the first enquiry to the final report card.</h1></div>
+        <p>Student records carry through to the class register, fee challans, exam results, and parent updates. Explore what each team does next.</p>
+      </div>
+      <div class="workflow-grid">
+        <a class="workflow feature feature-admissions" href="/tour?screen=admissions">
+          <div class="workflow-copy"><span class="tile-icon"><svg aria-hidden="true" class="icon"><use href="#i-users"/></svg></span><h2>Admissions</h2><p>Move from application to enrolment with one record for each student and their guardians.</p><span class="tile-action">Explore admissions</span></div>
+          <div class="tile-media"><Media src={students} alt="Ilm Vanta student list with class and enrolment status" /></div>
+        </a>
+        <a class="workflow feature feature-fees" href="/tour?screen=fees">
+          <div class="workflow-copy"><span class="tile-icon"><svg aria-hidden="true" class="icon"><use href="#i-wallet"/></svg></span><h2>Fee management</h2><p>Follow each challan from sibling discount to part payment and receipt.</p><span class="tile-action">Explore fees</span></div>
+          <div class="tile-media fee-media"><Media src={challan} alt="Fee challan detail with an itemised balance and payment status" /></div>
+        </a>
+        <a class="workflow compact" href="/tour?screen=attendance"><span class="tile-icon mint"><svg aria-hidden="true" class="icon"><use href="#i-list"/></svg></span><h2>Attendance</h2><p>Mark class registers offline and sync when the connection returns.</p><span class="tile-action">Explore attendance</span></a>
+        <a class="workflow compact" href="/tour?screen=exams"><span class="tile-icon orchid"><svg aria-hidden="true" class="icon"><use href="#i-exam"/></svg></span><h2>Exams &amp; results</h2><p>Turn marks, grades and teacher remarks into clear report cards.</p><span class="tile-action">Explore exams</span></a>
+        <a class="workflow compact" href="/tour?screen=timetable"><span class="tile-icon blue"><svg aria-hidden="true" class="icon"><use href="#i-calendar"/></svg></span><h2>Timetable</h2><p>Coordinate sections, teachers, rooms and cover periods in one weekly view.</p><span class="tile-action">Explore timetable</span></a>
+        <a class="workflow compact" href="/tour?screen=payroll"><span class="tile-icon gold"><svg aria-hidden="true" class="icon"><use href="#i-case"/></svg></span><h2>Staff &amp; payroll</h2><p>Bring staff records, leave and salary structures into the monthly pay run.</p><span class="tile-action">Explore payroll</span></a>
+      </div>
+    </section>
+</Base>

@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../../site.config.json';
+---
+<Base title="Frequently asked questions | Ilm Vanta" description="Find out how Ilm Vanta handles the parent app, Urdu, attendance, campuses and school data." path="/faq">
+<section class="container section faq-section" id="faq" aria-labelledby="faq-title">
+      <div><p class="eyebrow">FAQ</p><h1 id="faq-title">Before you book a demo.</h1><p>The walkthrough can follow your own class and fee structure.</p><a class="button button-white" href="/demo">Book a free demo</a></div>
+      <div class="faq-list">
+        <details name="school-faq" open><summary>Do parents need to install an app?<span></span></summary><p>Parents on Standard and Premium can use the parent portal in a browser or install the Android app.</p></details>
+        <details name="school-faq"><summary>Does the app work in Urdu?<span></span></summary><p>The parent and teacher app supports English and Urdu. The office workspace uses English.</p></details>
+        <details name="school-faq"><summary>Can teachers use the app on Basic?<span></span></summary><p>Yes. The teacher app is included on every plan. Teachers can mark attendance offline and sync it later.</p></details>
+        <details name="school-faq"><summary>Can we manage more than one campus?<span></span></summary><p>Yes. You can configure classes, bell schedules and holidays for each campus.</p></details>
+        <details name="school-faq"><summary>Who owns our school data?<span></span></summary><p>{site.faq.dataExportAnswer}</p></details>
+      </div>
+    </section>
+</Base>

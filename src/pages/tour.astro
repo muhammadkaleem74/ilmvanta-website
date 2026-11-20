@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import { getImage } from 'astro:assets';
+import dashboard from '../assets/shots/web/dashboard.png';
+import studentList from '../assets/shots/web/students-list.png';
+import feeChallans from '../assets/shots/web/fee-challans.png';
+import attendance from '../assets/shots/web/attendance-sheet.png';
+import reportCards from '../assets/shots/web/report-cards-list.png';
+import timetable from '../assets/shots/web/timetable.png';
+import payroll from '../assets/shots/web/payroll-run.png';
+
+const shots = {
+  'dashboard': dashboard,
+  'students-list': studentList,
+  'fee-challans': feeChallans,
+  'attendance-sheet': attendance,
+  'report-cards-list': reportCards,
+  'timetable': timetable,
+  'payroll-run': payroll,
+};
+const images = Object.fromEntries(await Promise.all(
+  Object.entries(shots).map(async ([name, src]) => [
+    name, (await getImage({ src, width: 1200, format: 'webp', quality: 78 })).src,
+  ])
+));
+---
+<Base title="Product tour | Ilm Vanta" description="Explore seven interactive previews of the Ilm Vanta school workspace." path="/tour">
+<section class="tour-section" id="tour" data-images={JSON.stringify(images)} aria-labelledby="tour-title">
+      <div class="container section">
+        <div class="section-head tour-head">
+          <div><p class="eyebrow">Interactive product tour</p><h1 id="tour-title">Take a look inside Ilm Vanta.</h1></div>
+          <p>Pick a workflow, then enlarge the screen to see how it works. All screenshots use the Ilm Vanta demo school.</p>
+        </div>
+        <div class="tour-tabs" role="tablist" aria-label="Product screens">
+          <button type="button" role="tab" id="tab-overview" data-screen="overview" aria-controls="tour-panel" aria-selected="true"><svg aria-hidden="true" class="icon"><use href="#i-grid"/></svg>Overview</button>
+          <button type="button" role="tab" id="tab-admissions" data-screen="admissions" aria-controls="tour-panel" aria-selected="false" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-users"/></svg>Admissions</button>
+          <button type="button" role="tab" id="tab-fees" data-screen="fees" aria-controls="tour-panel" aria-selected="false" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-wallet"/></svg>Fees</button>
+          <button type="button" role="tab" id="tab-attendance" data-screen="attendance" aria-controls="tour-panel" aria-selected="false" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-list"/></svg>Attendance</button>
+          <button type="button" role="tab" id="tab-exams" data-screen="exams" aria-controls="tour-panel" aria-selected="false" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-exam"/></svg>Exams</button>
+          <button type="button" role="tab" id="tab-timetable" data-screen="timetable" aria-controls="tour-panel" aria-selected="false" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-calendar"/></svg>Timetable</button>
+          <button type="button" role="tab" id="tab-payroll" data-screen="payroll" aria-controls="tour-panel" aria-selected="false" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-case"/></svg>Payroll</button>
+        </div>
+        <div id="tour-panel" class="tour-panel" role="tabpanel" aria-labelledby="tab-overview" tabindex="0">
+          <div class="tour-copy">
+            <div class="tour-topic"><span id="tour-section-name">School overview</span></div>
+            <h2 id="tour-heading">See what needs your attention today.</h2>
+            <p id="tour-description">Start with student strength, attendance, fee collection and new admissions in one operational view.</p>
+            <ul id="tour-points" class="tour-points"><li>Check class attendance at a glance</li><li>Review fees and pending admissions</li></ul>
+          </div>
+          <figure class="tour-figure">
+            <div class="window-bar"><span class="window-dots"><i></i><i></i><i></i></span><span id="tour-window-name">School dashboard</span><span></span></div>
+            <button class="image-button" id="expand-screen" type="button" aria-label="Enlarge school dashboard">
+              <img id="tour-image" src={images["dashboard"]} width="1200" height="750" alt="Ilm Vanta school dashboard" loading="lazy">
+              <span class="expand-label"><svg aria-hidden="true" class="icon"><use href="#i-expand"/></svg>Enlarge screen</span>
+            </button>
+          </figure>
+        </div>
+        <div class="tour-pagination">
+          <button type="button" id="tour-prev" class="button button-dark" disabled>Previous</button>
+          <span id="tour-progress" aria-live="polite">Overview · 1 of 7</span>
+          <button type="button" id="tour-next" class="button button-dark">Next</button>
+        </div>
+      </div>
+    </section>
+
+  <dialog id="screen-dialog" aria-labelledby="screen-dialog-title">
+    <div class="dialog-bar"><h2 id="screen-dialog-title">School dashboard</h2><div class="dialog-actions"><button class="button button-white" type="button" id="zoom-screen" aria-pressed="false">Zoom in</button><button class="icon-button" type="button" id="close-screen" aria-label="Close enlarged screen" autofocus><svg aria-hidden="true" class="icon"><use href="#i-close"/></svg></button></div></div>
+    <div class="dialog-image" tabindex="0" aria-label="Product screenshot"><img id="dialog-image" src={images.dashboard} alt=""></div>
+  </dialog>
+</Base>

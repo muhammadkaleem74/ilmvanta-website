@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { getImage } from 'astro:assets';
+import parentEnglish from '../assets/shots/app/parent-home-en.png';
+import parentUrdu from '../assets/shots/app/parent-home-ur.png';
+import teacherToday from '../assets/shots/app/teacher-today.png';
+
+const shots = {
+  'parent-home-en': parentEnglish,
+  'parent-home-ur': parentUrdu,
+  'teacher-today': teacherToday,
+};
+const images = Object.fromEntries(await Promise.all(
+  Object.entries(shots).map(async ([name, src]) => [
+    name, (await getImage({ src, width: 480, format: 'webp', quality: 78 })).src,
+  ])
+));
+---
+<Base title="Mobile app | Ilm Vanta" description="Preview the Ilm Vanta parent and teacher app in English and Urdu." path="/mobile-app">
+<section class="container section mobile-section" id="mobile-app" data-images={JSON.stringify(images)} aria-labelledby="mobile-title">
+      <div class="mobile-copy">
+        <p class="eyebrow">Parent &amp; teacher app</p>
+        <h1 id="mobile-title">The school day, in your pocket.</h1>
+        <p>Give parents a view of attendance, fees and results. Give teachers their timetable and a register they can mark offline.</p>
+        <div class="mobile-options" role="group" aria-label="App preview">
+          <button type="button" data-mobile="parent" aria-pressed="true">Parent · English</button>
+          <button type="button" data-mobile="urdu" aria-pressed="false">Parent · <span lang="ur" dir="rtl">اردو</span></button>
+          <button type="button" data-mobile="teacher" aria-pressed="false">Teacher</button>
+        </div>
+        <p class="mobile-note" id="mobile-note" aria-live="polite">See attendance, upcoming fees and notices for your child.</p>
+      </div>
+      <div class="phone-stage">
+        <figure class="phone"><img id="phone-image" src={images["parent-home-en"]} width="480" height="1067" alt="Ilm Vanta parent app home screen in English" loading="lazy"></figure>
+      </div>
+    </section>
+</Base>

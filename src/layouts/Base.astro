@@ -2,7 +2,6 @@
 import '@fontsource-variable/inter/wght.css';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import '../styles/global.css';
-import BrandMark from '../components/BrandMark.astro';
 import site from '../../site.config.json';
 
 interface Props {
@@ -15,10 +14,17 @@ const { title, description, path, noindex = false } = Astro.props;
 const canonical = new URL(path, site.siteUrl).href;
 const ogImage = new URL('/og-image.png', site.siteUrl).href;
 const home = path === '/';
-const link = (hash: string) => (home ? hash : `/${hash}`);
+const navigation = [
+  ['/', 'Home'],
+  ['/workflows', 'Workflows'],
+  ['/tour', 'Product tour'],
+  ['/mobile-app', 'Mobile app'],
+  ['/pricing', 'Pricing'],
+  ['/faq', 'FAQ'],
+];
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en-PK">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -27,8 +33,7 @@ const link = (hash: string) => (home ? hash : `/${hash}`);
     <meta name="description" content={description}>
     {noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={canonical}>}
     <meta name="theme-color" content="#F8FAFC">
-    <link rel="icon" href="/favicon.ico" sizes="32x32">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/ilm-vanta-logo.png" type="image/png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta property="og:type" content="website">
@@ -47,40 +52,55 @@ const link = (hash: string) => (home ? hash : `/${hash}`);
     <meta name="twitter:image" content={ogImage}>
     <slot name="head" />
   </head>
-  <body>
-    <a class="skip" href="#main">Skip to content</a>
-    <header class="site">
-      <div class="wrap">
-        <a class="brand" href="/" aria-label="Ilm Vanta home"><BrandMark />Ilm Vanta</a>
-        <nav class="nav" aria-label="Main">
-          <a href={link('#features')}>Features</a>
-          <a href={link('#solutions')}>Solutions</a>
-          <a href={link('#mobile')}>Mobile App</a>
-          <a href={link('#pricing')}>Pricing</a>
-          <a href={link('#faq')}>FAQ</a>
-        </nav>
-        <div class="head-cta">
-          <a class="btn btn-ghost login" href={site.appUrl} target="_blank" rel="noopener">School Login</a>
-          <a class="btn btn-primary" href={link('#demo')}>Book a Free Demo</a>
-        </div>
-      </div>
-    </header>
-    <main id="main">
-      <slot />
-    </main>
-    <footer class="site">
-      <div class="wrap">
-        <span>© {new Date().getFullYear()} Ilm Vanta · School management for Pakistan</span>
-        <nav aria-label="Footer">
-          <a href={link('#features')}>Features</a>
-          <a href={link('#solutions')}>Solutions</a>
-          <a href={link('#pricing')}>Pricing</a>
-          <a href="/privacy">Privacy policy</a>
-          <a href="/delete-data">Delete data</a>
-          <a href="/terms">Terms</a>
-          <a href={site.appUrl} target="_blank" rel="noopener">School login</a>
-        </nav>
-      </div>
-    </footer>
+  <body class={home ? "layout-home" : "layout-page"}>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 12 7-12 7z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M16 4a3 3 0 0 1 0 6m1 4a4 4 0 0 1 4 4v2"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M21 10h-5a2 2 0 0 0 0 4h5m-4-2h.1"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 5V3h6v2m-6 6 2 2 4-4m-6 8h6"/></symbol>
+    <symbol id="i-exam" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H6V3zm7 0v5h4M9 12h6m-6 4h6"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18m-13 4h2m4 0h2m-8 3h2"/></symbol>
+    <symbol id="i-case" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3M3 12a19 19 0 0 0 18 0m-9 1v3"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"/></symbol>
+  </svg>
+
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-row">
+      <a class="brand" href="/"><img src="/ilm-vanta-logo.png" width="44" height="44" alt=""><span>Ilm <b>Vanta</b></span></a>
+      <button class="icon-button menu-button" id="menu-button" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Open navigation"><svg aria-hidden="true" class="icon"><use href="#i-menu"/></svg></button>
+      <nav id="main-nav" class="main-nav" aria-label="Main navigation">
+        {navigation.map(([href, label]) => (
+          <a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>
+        ))}
+        <a class="school-login" href={site.appUrl} target="_blank" rel="noopener noreferrer">School login<span class="sr-only"> (opens in a new tab)</span></a>
+        <a class="button button-primary nav-cta" href="/demo" aria-current={path === "/demo" ? "page" : undefined}>Book a free demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <slot />
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <p>Smarter Schools. Brighter Futures.</p>
+      <nav aria-label="Footer">
+        <a href="/privacy">Privacy policy</a>
+        <a href="/delete-data">Delete data</a>
+        <a href="/terms">Terms</a>
+      </nav>
+      <small>© {new Date().getFullYear()} Ilm Vanta</small>
+    </div>
+  </footer>
+  <script>import "../scripts/marketing.js";</script>
   </body>
 </html>
