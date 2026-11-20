@@ -143,11 +143,25 @@ p{color:var(--muted)}
 .plan-primary{border-color:#9987f1;background:#f6f3ff;box-shadow:inset 0 3px 0 #6953db,0 6px 18px #35266e0d}
 .layout-page .plan h2{font-size:1.6rem}
 .plan>p{margin:7px 0 15px;font-size:.925rem}
-.plan>strong{font-size:1.22rem;letter-spacing:-.024em}
+.billing-options button{display:inline-flex;align-items:center;gap:7px}
+.billing-discount{padding:2px 7px;border-radius:999px;background:#e4e0fb;color:#48349b;font-size:.8125rem;white-space:nowrap}
+.plan-price strong{display:block;color:var(--ink);font-size:clamp(1.7rem,2.5vw,2.25rem);line-height:1.15;letter-spacing:-.045em}
+.plan-price span{display:block;margin-top:5px;color:var(--muted);font-size:.875rem}
+.plan-capacity{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:12px;color:#433961;font-size:.875rem;line-height:1.35}
+.plan-capacity>span,.plan-campus{padding:6px 8px;border:1px solid #e2d9ef;border-radius:9px;background:#f9f6ff;font-weight:650}
+.plan-campus{display:inline-flex;align-items:center;gap:5px;border-color:#eac978;background:#fff2cc;color:#664000;font-weight:780}
+.plan-campus .icon{width:14px;height:14px}
 .plan ul{border-top:1px solid var(--line);margin:17px 0 21px;padding:16px 0 0;list-style:none;display:grid;gap:9px}
 .plan li{position:relative;padding-left:22px;font-size:.925rem;color:#443e57;line-height:1.5}
 .plan li::before{content:"";position:absolute;left:2px;top:.35em;width:11px;height:6px;border-bottom:2px solid #5b46c9;border-left:2px solid #5b46c9;transform:rotate(-45deg)}
 .plan .button{margin-top:auto}
+.pricing-notes{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-top:16px}
+.pricing-note{padding:15px 17px;border:1px solid #e1daed;border-radius:12px;background:#fff}
+.layout-page .pricing-note h2{margin-bottom:5px;font-size:1.04rem;letter-spacing:-.02em}
+.pricing-note p,.pricing-note a{font-size:.875rem}
+.pricing-note p+p{margin-top:5px}
+.pricing-note-campus{background:#fffaec;border-color:#ecd9a6}
+.pricing-note-campus a{color:var(--primary-dark);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .pricing-extra{display:flex;gap:12px;align-items:center;margin-top:19px;padding:13px 17px;border:1px solid #e5dcfa;border-radius:11px;background:#f0eafb}
 .pricing-extra p{font-size:.875rem;color:#493b63}
 .pricing-extra .icon{color:var(--primary-dark)}
@@ -259,7 +273,7 @@ textarea{resize:vertical}
   .mobile-section,.faq-section,.demo-layout{grid-template-columns:1fr}
   .phone-stage{min-height:0;padding:17px}
   .phone{width:174px}
-  .plan-grid{grid-template-columns:1fr;gap:9px}
+  .plan-grid,.pricing-notes{grid-template-columns:1fr;gap:9px}
   .plan{padding:19px}
   .plan>p{margin:4px 0 11px}
   .billing-row{gap:8px}

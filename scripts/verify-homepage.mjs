@@ -23,6 +23,10 @@ const checks = {
   deletionForm: deletion.includes('https://api.web3forms.com/submit') && deletion.includes('id="deletionForm"'),
   productTabs: (tour.match(/id="tab-/g) ?? []).length === 7,
   mobileScreens: ['parent', 'urdu', 'teacher'].every((screen) => mobile.includes(`data-mobile="${screen}"`)),
+  billingTotals: ['PKR 15,000', 'PKR 42,750', 'PKR 162,000', 'PKR 25,000', 'PKR 71,250', 'PKR 270,000'].every((price) => pricing.includes(`>${price}<`)),
+  campusLimits: (pricing.match(/class="plan-campus"/g) ?? []).length === 2
+    && (pricing.match(/1 campus only/g) ?? []).length === 2 && pricing.includes('Request a Premium quote.'),
+  studentPricing: ['300 students included', '500 students included', 'PKR 60 per month', 'PKR 27,000'].every((label) => pricing.includes(label)),
   preservedPlans: ['Basic', 'Standard', 'Premium'].every((name) => pricing.includes(`>${name}<`)),
   domain: readFileSync(new URL('CNAME', dist), 'utf8').trim() === 'ilmvanta.com',
 };

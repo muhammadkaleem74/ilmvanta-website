@@ -1,36 +1,90 @@
 ---
 import Base from '../layouts/Base.astro';
 import site from '../../site.config.json';
+
+const billingPeriods = [
+  { name: 'Monthly', months: 1, discount: 0, label: 'Billed every month' },
+  { name: 'Quarterly', months: 3, discount: 5, label: 'Billed every 3 months' },
+  { name: 'Yearly', months: 12, discount: 10, label: 'Billed every year' },
+];
+const plans: Partial<Record<string, { monthly: number; students: number; campuses: number }>> = {
+  Basic: { monthly: 15000, students: 300, campuses: 1 },
+  Standard: { monthly: 25000, students: 500, campuses: 1 },
+};
+const additionalStudentRate = 60;
+const formatPrice = (amount: number) => `PKR ${amount.toLocaleString('en-PK')}`;
+const basic = plans.Basic!;
+const standard = plans.Standard!;
+const basicAtStandardCapacity = basic.monthly + (standard.students - basic.students) * additionalStudentRate;
 ---
-<Base title="Pricing | Ilm Vanta" description="Compare Basic, Standard and Premium and choose a billing preference for your school." path="/pricing">
-<section class="pricing-section" id="pricing" aria-labelledby="pricing-title">
-      <div class="container section">
-        <div class="section-head price-head">
-          <div><p class="eyebrow">Pricing</p><h1 id="pricing-title">A plan for how your school works.</h1></div>
-          <p>Pricing is based on student count. Choose a billing preference, then request a quote for your school.</p>
+<Base title="Pricing | Ilm Vanta" description="Compare Basic and Standard school plans, see quarterly and yearly savings, or request a Premium quote." path="/pricing">
+  <section class="pricing-section" id="pricing" aria-labelledby="pricing-title">
+    <div class="container section">
+      <div class="section-head price-head">
+        <div><p class="eyebrow">Pricing</p><h1 id="pricing-title">A plan for how your school works.</h1></div>
+        <p>Compare plans by student count and campus needs. Choose a billing period to see the base subscription total.</p>
+      </div>
+      <div class="billing-row">
+        <div class="billing-options" role="group" aria-label="Billing period">
+          {billingPeriods.map((period) => (
+            <button type="button" data-billing={period.name} aria-pressed={period.name === 'Monthly' ? 'true' : 'false'}>
+              {period.name}{period.discount > 0 && <span class="billing-discount">Save {period.discount}%</span>}
+            </button>
+          ))}
         </div>
-        <div class="billing-row">
-          <div class="billing-options" role="group" aria-label="Billing preference">
-            <button type="button" data-billing="Monthly" aria-pressed="true">Monthly</button>
-            <button type="button" data-billing="Quarterly" aria-pressed="false">Quarterly</button>
-            <button type="button" data-billing="Yearly" aria-pressed="false">Yearly</button>
-          </div>
-          <p id="billing-note" aria-live="polite">Pay month to month.</p>
-        </div>
-        <div class="plan-grid">
-          {site.plans.map((plan) => (
-            <article class:list={["plan", { "plan-primary": plan.highlight }]}>
+        <p>Discounts apply to the base subscription only.</p>
+      </div>
+
+      <div class="plan-grid">
+        {site.plans.map((plan) => {
+          const pricing = plans[plan.name];
+          return (
+            <article class:list={['plan', { 'plan-primary': plan.highlight }]}>
               <h2>{plan.name}</h2>
               <p>{plan.for}</p>
-              <strong>{site.pricing.showStartingPrice ? site.pricing.startingPriceText : 'Custom quote'}</strong>
+              {pricing ? (
+                <>
+                  <div class="plan-price" aria-live="polite" aria-atomic="true">
+                    {billingPeriods.map((period) => (
+                      <div data-billing-price={period.name} hidden={period.name !== 'Monthly'}>
+                        <strong>{formatPrice(Math.round(pricing.monthly * period.months * (100 - period.discount) / 100))}</strong>
+                        <span>{period.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div class="plan-capacity">
+                    <span>{pricing.students} students included</span>
+                    <strong class="plan-campus"><svg aria-hidden="true" class="icon"><use href="#i-grid"/></svg>{pricing.campuses} campus only</strong>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div class="plan-price"><strong>Custom quote</strong><span>Based on your school’s needs</span></div>
+                  <div class="plan-capacity">Student and campus capacity agreed in your quote.</div>
+                </>
+              )}
               <ul>{plan.modules.map((module) => <li>{module.replace(/^\+/, '')}</li>)}</ul>
-              <a class:list={["button", plan.highlight ? "button-primary" : "button-white"]}
+              <a class:list={['button', plan.highlight ? 'button-primary' : 'button-white']}
                 href={`/demo?plan=${encodeURIComponent(plan.name)}&billing=Monthly`}
                 data-plan={plan.name} aria-label={`Request a quote for ${plan.name}`}>Request a quote</a>
             </article>
-          ))}
-        </div>
-        <aside class="pricing-extra"><svg aria-hidden="true" class="icon"><use href="#i-globe"/></svg><p><strong>{site.addOn.name}</strong> {site.addOn.text}</p></aside>
+          );
+        })}
       </div>
-    </section>
+
+      <div class="pricing-notes">
+        <section class="pricing-note" aria-labelledby="additional-students">
+          <h2 id="additional-students">Additional students</h2>
+          <p>Each active student above your plan’s included count costs <strong>{formatPrice(additionalStudentRate)} per month</strong>.</p>
+          <p>For {standard.students} active students on monthly billing, Basic totals <strong>{formatPrice(basicAtStandardCapacity)}</strong> and Standard totals <strong>{formatPrice(standard.monthly)}</strong>.</p>
+        </section>
+        <section class="pricing-note pricing-note-campus" aria-labelledby="multiple-campuses">
+          <h2 id="multiple-campuses">Need more than one campus?</h2>
+          <a href="/demo?plan=Premium&amp;billing=Monthly" data-plan="Premium">Request a Premium quote.</a>
+        </section>
+      </div>
+
+      <aside class="pricing-extra"><svg aria-hidden="true" class="icon"><use href="#i-globe"/></svg><p><strong>{site.addOn.name}</strong> {site.addOn.text}</p></aside>
+    </div>
+  </section>
 </Base>

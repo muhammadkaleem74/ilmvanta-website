@@ -55,11 +55,6 @@ const mobileScreens = {
   urdu: { image: 'parent-home-ur', alt: 'Ilm Vanta parent app home screen in Urdu', note: 'Preview the same parent workspace in Urdu with a right-to-left layout.' },
   teacher: { image: 'teacher-today', alt: 'Ilm Vanta teacher app showing today’s classes', note: 'Review today’s timetable, see assigned covers and open the class register.' },
 };
-const billingCopy = {
-  Monthly: 'Pay month to month.',
-  Quarterly: 'Pay once every three months.',
-  Yearly: 'Pay once per year.',
-};
 
 const byId = (id) => document.getElementById(id);
 const pageParams = new URLSearchParams(location.search);
@@ -200,13 +195,17 @@ function initMobilePreview() {
 }
 
 function initPricing() {
-  const billingButtons = [...document.querySelectorAll('[data-billing]')];
-  const quoteLinks = [...document.querySelectorAll('[data-plan]')];
+  const pricing = byId('pricing');
+  const billingButtons = [...pricing.querySelectorAll('[data-billing]')];
+  const prices = pricing.querySelectorAll('[data-billing-price]');
+  const quoteLinks = pricing.querySelectorAll('[data-plan]');
   for (const button of billingButtons) {
     button.addEventListener('click', () => {
       const billing = button.dataset.billing;
       selectOption(billingButtons, button);
-      byId('billing-note').textContent = billingCopy[billing];
+      for (const price of prices) {
+        price.hidden = price.dataset.billingPrice !== billing;
+      }
       for (const link of quoteLinks) {
         link.search = new URLSearchParams({ plan: link.dataset.plan, billing }).toString();
       }
@@ -334,5 +333,5 @@ if (location.pathname === '/' && legacyPage) location.replace(legacyPage + locat
 
 if (byId('tour-panel')) initTour();
 if (byId('phone-image')) initMobilePreview();
-if (byId('billing-note')) initPricing();
+if (byId('pricing')) initPricing();
 if (byId('demo-form')) initDemo();
