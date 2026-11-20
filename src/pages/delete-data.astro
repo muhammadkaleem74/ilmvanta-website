@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import site from '../../site.config.json';
+import { contactEmail } from '../data/contact';
 
 const formReady = !!site.form.web3formsAccessKey && site.form.web3formsAccessKey !== 'WEB3FORMS_ACCESS_KEY';
 ---
@@ -49,9 +50,9 @@ const formReady = !!site.form.web3formsAccessKey && site.form.web3formsAccessKey
         <label class="full">What would you like deleted? <em>Required</em><textarea name="message" required maxlength="1500"></textarea></label>
         <label class="full consent"><input type="checkbox" name="confirmation" required><span>I confirm that the information above is accurate and that Ilm Vanta may contact me and the named school to verify this request.</span></label>
 
-        {formReady ? <div class="full submit-row"><button class="btn btn-primary" type="submit" id="deletionSubmit">Send deletion request</button><span>We will acknowledge the request using the email above.</span></div> : <p class="form-msg off" role="status">The online form is temporarily unavailable. Email <a href={`mailto:${site.legal.privacyEmail}`}>{site.legal.privacyEmail}</a>.</p>}
+        {formReady ? <div class="full submit-row"><button class="btn btn-primary" type="submit" id="deletionSubmit">Send deletion request</button><span>We will acknowledge the request using the email above.</span></div> : <p class="form-msg off" role="status">The online form is temporarily unavailable. Email <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>}
         <p class="form-msg ok" id="deletionOk" role="status" hidden>Thank you. Your request has been sent. We will contact you about verification and next steps.</p>
-        <p class="form-msg err" id="deletionErr" role="alert" hidden>Sorry, the request did not go through. Please try again or email <a href={`mailto:${site.legal.privacyEmail}`}>{site.legal.privacyEmail}</a>.</p>
+        <p class="form-msg err" id="deletionErr" role="alert" hidden>Sorry, the request did not go through. Please try again or email <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
       </form>
     </div>
   </article>

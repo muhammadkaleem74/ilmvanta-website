@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import site from '../../site.config.json';
+import { contactEmail } from '../data/contact';
 
 const digits = site.contact.whatsappNumber.replace(/\D/g, '');
 const message = encodeURIComponent("Assalam o alaikum, I'd like a demo of Ilm Vanta for my school.");
@@ -15,7 +16,7 @@ const formReady = !!site.form.web3formsAccessKey && site.form.web3formsAccessKey
           <p>Tell us a little about your school so the walkthrough can focus on the work you do every day.</p>
           <div class="demo-preview demo-contact">
             <p><strong>WhatsApp</strong> <a href={whatsapp}>{site.contact.phone}</a></p>
-            <p><strong>Email</strong> <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>
+            <p><strong>Email</strong> <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
             <p><strong>Office hours</strong> {site.contact.officeHours}</p>
           </div>
         </div>

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import site from '../../site.config.json';
+import { contactEmail } from '../data/contact';
 const L = site.legal;
 ---
 <Base
@@ -50,7 +51,7 @@ const L = site.legal;
       <p>A school may stop using Ilm Vanta at the end of any paid period. We may suspend or end an account that breaks these terms or remains unpaid, after notice. Section 3 (export and deletion) applies when an account ends.</p>
 
       <h2>10. Law and contact</h2>
-      <p>These terms are governed by the laws of Pakistan. We may update these terms and will tell schools about important changes in advance. Questions: <a href={`mailto:${L.privacyEmail}`}>{L.privacyEmail}</a>.</p>
+      <p>These terms are governed by the laws of Pakistan. We may update these terms and will tell schools about important changes in advance. Questions: <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
     </div>
   </article>
 </Base>
