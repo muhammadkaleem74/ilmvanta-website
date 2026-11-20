@@ -23,6 +23,9 @@ const checks = {
   deletionForm: deletion.includes('https://api.web3forms.com/submit') && deletion.includes('id="deletionForm"'),
   productTabs: (tour.match(/id="tab-/g) ?? []).length === 7,
   mobileScreens: ['parent', 'urdu', 'teacher'].every((screen) => mobile.includes(`data-mobile="${screen}"`)),
+  schoolPilot: ['90-day paid pilot', 'first 3 schools', 'PKR 10,000', 'PKR 16,000',
+    'plan=Basic&amp;billing=Monthly&amp;offer=school-pilot', 'plan=Standard&amp;billing=Monthly&amp;offer=school-pilot']
+    .every((value) => pricing.includes(value)) && demo.includes('name="offer" value="90-day paid pilot"'),
   billingTotals: ['PKR 15,000', 'PKR 42,750', 'PKR 162,000', 'PKR 25,000', 'PKR 71,250', 'PKR 270,000'].every((price) => pricing.includes(`>${price}<`)),
   campusLimits: (pricing.match(/class="plan-campus"/g) ?? []).length === 2
     && (pricing.match(/1 campus only/g) ?? []).length === 2 && pricing.includes('Request a Premium quote.'),

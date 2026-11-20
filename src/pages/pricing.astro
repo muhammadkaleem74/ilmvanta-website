@@ -11,6 +11,10 @@ const plans: Partial<Record<string, { monthly: number; students: number; campuse
   Basic: { monthly: 15000, students: 300, campuses: 1 },
   Standard: { monthly: 25000, students: 500, campuses: 1 },
 };
+const pilotPlans = [
+  { name: 'Basic', monthly: 10000, renewal: plans.Basic!.monthly },
+  { name: 'Standard', monthly: 16000, renewal: plans.Standard!.monthly },
+];
 const additionalStudentRate = 60;
 const formatPrice = (amount: number) => `PKR ${amount.toLocaleString('en-PK')}`;
 const basic = plans.Basic!;
@@ -24,6 +28,26 @@ const basicAtStandardCapacity = basic.monthly + (standard.students - basic.stude
         <div><p class="eyebrow">Pricing</p><h1 id="pricing-title">A plan for how your school works.</h1></div>
         <p>Compare plans by student count and campus needs. Choose a billing period to see the base subscription total.</p>
       </div>
+      <section class="pricing-pilot" aria-labelledby="pilot-title">
+        <div class="pilot-intro">
+          <h2 id="pilot-title">90-day paid pilot</h2>
+          <p>Available to the first 3 schools to enrol. Both pilot plans are billed monthly.</p>
+          <p>Standard Excel import and one remote staff training session are included. We quote historical migration after reviewing a sample of your records.</p>
+        </div>
+        <div class="pilot-options">
+          {pilotPlans.map((plan) => (
+            <article class="pilot-option">
+              <h3>{plan.name} pilot</h3>
+              <p class="pilot-price"><strong>{formatPrice(plan.monthly)}</strong><span> / month</span></p>
+              <p>Regular rate after the pilot is {formatPrice(plan.renewal)}/month.</p>
+              <a class:list={['button', plan.name === 'Standard' ? 'button-primary' : 'button-white']}
+                href={`/demo?plan=${plan.name}&billing=Monthly&offer=school-pilot`}>Request the {plan.name} pilot</a>
+            </article>
+          ))}
+        </div>
+        <p class="pilot-terms">We confirm availability and renewal terms before you enrol. Standard student allowances and additional-student charges apply.</p>
+      </section>
+
       <div class="billing-row">
         <div class="billing-options" role="group" aria-label="Billing period">
           {billingPeriods.map((period) => (

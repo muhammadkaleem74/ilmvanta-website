@@ -25,12 +25,14 @@ const formReady = !!site.form.web3formsAccessKey && site.form.web3formsAccessKey
           <input type="hidden" name="access_key" value={site.form.web3formsAccessKey}>
           <input type="hidden" name="subject" value={site.form.subject}>
           <input type="hidden" name="from_name" value="ilmvanta.com">
+          <input type="hidden" name="offer" value="90-day paid pilot" disabled>
           <div class="hp" aria-hidden="true"><label>Leave this empty<input type="checkbox" name="botcheck" tabindex="-1"></label></div>
           <noscript><p class="form-msg off">To book a demo, <a href={whatsapp}>contact us on WhatsApp</a>.</p></noscript>
           <div class="form-progress" aria-hidden="true"><span class="current"></span><span></span></div>
           <div id="demo-fields">
             <h2 id="details-title" tabindex="-1">Tell us about your school</h2>
             <p class="form-caption">Step 1 of 2 · Required fields marked *</p>
+            <p class="demo-pilot" id="demo-pilot" hidden><strong>90-day paid pilot.</strong> Your request includes monthly pilot billing. We’ll confirm availability and renewal terms before you enrol.</p>
             <fieldset class="form-grid" disabled>
               <legend class="sr-only">School and contact details</legend>
               <label>School name *<input type="text" name="school" autocomplete="organization" placeholder="e.g. Crescent School" maxlength="100" required></label>
@@ -41,7 +43,7 @@ const formReady = !!site.form.web3formsAccessKey && site.form.web3formsAccessKey
               <label>Phone / WhatsApp *<input type="tel" name="phone" autocomplete="tel" placeholder="0300 0000000" maxlength="25" required></label>
               <label>Email <span class="optional">(optional)</span><input type="email" name="email" autocomplete="email" placeholder="you@example.com" maxlength="150"></label>
               <label>Plan<select name="plan"><option value="">Help me choose</option>{site.plans.map((plan) => <option>{plan.name}</option>)}</select></label>
-              <label>Billing preference<select name="billing"><option value="">Help me choose</option><option>Monthly</option><option>Quarterly</option><option>Yearly</option></select></label>
+              <label id="demo-billing">Billing preference<select name="billing"><option value="">Help me choose</option><option>Monthly</option><option>Quarterly</option><option>Yearly</option></select></label>
               <label class="full">What would you like to see? <span class="optional">(optional)</span><textarea name="message" placeholder="e.g. Fee collection and parent access" maxlength="500" rows="2"></textarea></label>
             </fieldset>
             <button class="button button-primary form-cta" type="submit" disabled>Review demo request</button>

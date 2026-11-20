@@ -220,6 +220,10 @@ function initDemo() {
   const demoSuccess = byId('demo-success');
   const fields = demoForm.elements;
   const person = fields.namedItem('name');
+  const offer = fields.namedItem('offer');
+  const pilotNote = byId('demo-pilot');
+  const billingLabel = byId('demo-billing');
+  let pilotRequested = pageParams.get('offer') === 'school-pilot';
   const send = byId('send-demo');
   const edit = byId('edit-demo');
   const error = byId('demo-error');
@@ -237,6 +241,15 @@ function initDemo() {
     byId(heading).scrollIntoView({ block: 'nearest' });
   }
 
+  function updatePilot() {
+    const eligiblePlan = fields.plan.value === 'Basic' || fields.plan.value === 'Standard';
+    const pilot = pilotRequested && eligiblePlan;
+    offer.disabled = !pilot;
+    pilotNote.hidden = !pilot;
+    billingLabel.hidden = pilot;
+    if (pilot) fields.billing.value = 'Monthly';
+  }
+
   function drawReview() {
     const summary = [
       ['School', fields.school.value.trim()],
@@ -248,6 +261,7 @@ function initDemo() {
       ['Email', fields.email.value.trim()],
       ['Plan', fields.plan.value || 'Help me choose'],
       ['Billing', fields.billing.value],
+      ['Offer', offer.disabled ? '' : offer.value],
       ['Demo topics', fields.message.value.trim()],
     ];
     byId('review-list').replaceChildren(...summary.filter(([, value]) => value).map(([name, value]) => {
@@ -310,6 +324,8 @@ function initDemo() {
   edit.addEventListener('click', () => setDemoStep('details'));
   byId('reset-demo').addEventListener('click', () => {
     history.replaceState(history.state, '', location.pathname);
+    pilotRequested = false;
+    updatePilot();
     setDemoStep('details');
   });
   for (const name of ['plan', 'billing']) {
@@ -319,6 +335,8 @@ function initDemo() {
       select.value = selection;
     }
   }
+  fields.plan.addEventListener('change', updatePilot);
+  updatePilot();
   demoForm.querySelector('fieldset').disabled = false;
   demoForm.querySelector('.form-cta').disabled = false;
 }

@@ -136,6 +136,18 @@ p{color:var(--muted)}
 .phone{width:min(100%,193px);border:5px solid #1c1739;border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 15px 34px #1711349e}
 .phone img{width:100%;aspect-ratio:480/1067;object-fit:cover;object-position:top}
 .pricing-section{background:var(--paper);border-block:1px solid #eeeaf5}
+.pricing-pilot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:16px 22px;margin-bottom:24px;padding:22px;border:1px solid #d8cdf8;border-radius:15px;background:#f0eafb}
+.pilot-intro p,.pilot-option p{font-size:.875rem}
+.pilot-intro p{margin-top:8px}
+.pilot-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pilot-option{display:flex;flex-direction:column;align-items:flex-start;padding:14px;border:1px solid #e1daed;border-radius:11px;background:#fff}
+.pilot-option h3{margin:0;font-size:.95rem}
+.pilot-option .pilot-price{margin:4px 0;color:var(--ink)}
+.pilot-price strong{font-size:1.22rem;letter-spacing:-.03em}
+.pilot-price span{font-size:.8125rem}
+.pilot-option .button{margin-top:auto}
+.pilot-option p:last-of-type{margin-bottom:11px}
+.pilot-terms{grid-column:1/-1;font-size:.8125rem}
 .billing-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:22px}
 .billing-row p{font-size:.875rem}
 .plan-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
@@ -193,6 +205,7 @@ p{color:var(--muted)}
 .form-progress span{flex:1;height:4px;border-radius:9px;background:#e8e0f6}
 .form-progress .current{background:#6446df}
 .form-caption{margin:7px 0 17px;font-size:.875rem}
+.demo-pilot{margin:0 0 14px;padding:9px 11px;border:1px solid #ded4fb;border-radius:8px;background:#f3efff;color:#443565;font-size:.875rem}
 .form-grid{padding:0;margin:0;border:0;min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .form-grid label{display:block;font-size:.875rem;color:#27213d;font-weight:680}
 .form-grid .full{grid-column:1/-1}
@@ -274,6 +287,7 @@ textarea{resize:vertical}
   .phone-stage{min-height:0;padding:17px}
   .phone{width:174px}
   .plan-grid,.pricing-notes{grid-template-columns:1fr;gap:9px}
+  .pricing-pilot{grid-template-columns:1fr;padding:15px}
   .plan{padding:19px}
   .plan>p{margin:4px 0 11px}
   .billing-row{gap:8px}
@@ -282,6 +296,7 @@ textarea{resize:vertical}
   .footer-row{padding-block:11px}
 }
 @media(max-width:400px){
+  .pilot-options{grid-template-columns:1fr}
   .tour-tabs .icon{display:none}
   .form-grid{grid-template-columns:1fr}
 }
